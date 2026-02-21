@@ -1,207 +1,248 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إلى ديدا ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Amiri:ital@1&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-color: #ff758c;
-            --secondary-color: #ff7eb3;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إلى ديدا ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Amiri:ital@1&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary-color: #ff758c;
+    --secondary-color: #ff7eb3;
+}
 
-        body {
-            margin: 0;
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            overflow-x: hidden;
-        }
+body {
+    margin: 0;
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow-x: hidden;
+    transition: background 3s linear;
+}
 
-        /* شاشة البداية */
-        #overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #ff758c;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            transition: 0.8s;
-        }
+/* شاشة البداية */
+#overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #ff758c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: 0.8s;
+}
 
-        #overlay button {
-            padding: 15px 30px;
-            font-size: 22px;
-            border: none;
-            border-radius: 50px;
-            background: white;
-            color: #ff758c;
-            cursor: pointer;
-            font-family: 'Tajawal';
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+#overlay button {
+    padding: 15px 30px;
+    font-size: 22px;
+    border: none;
+    border-radius: 50px;
+    background: white;
+    color: #ff758c;
+    cursor: pointer;
+    font-family: 'Tajawal';
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 
-        /* القلوب المتحركة */
-        .heart {
-            position: fixed;
-            bottom: -20px;
-            font-size: 24px;
-            animation: floatUp 6s linear infinite;
-            opacity: 0.7;
-            pointer-events: none;
-        }
+/* القلوب المتحركة */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 24px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.7;
+    pointer-events: none;
+}
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-        }
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
 
-        .container {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 40px 20px;
-            border-radius: 30px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            max-width: 450px;
-            width: 85%;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
-            z-index: 10;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: 1s ease-out;
-        }
+.container {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 40px 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    max-width: 450px;
+    width: 85%;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.3);
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 1s ease-out;
+}
 
-        .container.show { opacity: 1; transform: translateY(0); }
+.container.show { opacity: 1; transform: translateY(0); }
 
-        h1 { font-size: 28px; margin-bottom: 10px; }
-        .intro { font-size: 17px; line-height: 1.6; margin-bottom: 25px; }
+h1 { font-size: 28px; margin-bottom: 10px; }
+.intro { font-size: 17px; line-height: 1.6; margin-bottom: 25px; }
 
-        /* العداد */
-        .counter-box {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-        }
-        #timer { font-size: 19px; font-weight: bold; direction: ltr; display: block; margin-top: 5px; }
+/* العداد */
+.counter-box {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+#timer { font-size: 19px; font-weight: bold; direction: ltr; display: block; margin-top: 5px; }
 
-        /* الجدول الزمني */
-        .timeline { text-align: right; list-style: none; padding: 0; border-right: 2px solid rgba(255,255,255,0.5); }
-        .timeline li {
-            margin-bottom: 20px;
-            padding-right: 15px;
-            position: relative;
-        }
-        .timeline li::before {
-            content: "❤️";
-            position: absolute;
-            right: -12px;
-            top: 0;
-            font-size: 12px;
-        }
-        .date { font-weight: bold; color: #fff; font-size: 14px; display: block; margin-bottom: 3px; background: rgba(0,0,0,0.1); width: fit-content; padding: 2px 8px; border-radius: 5px; }
-        .event { font-size: 16px; line-height: 1.4; }
+/* الجدول الزمني */
+.timeline { text-align: right; list-style: none; padding: 0; border-right: 2px solid rgba(255,255,255,0.5); }
+.timeline li {
+    margin-bottom: 20px;
+    padding-right: 15px;
+    position: relative;
+}
+.timeline li::before {
+    content: "❤️";
+    position: absolute;
+    right: -12px;
+    top: 0;
+    font-size: 12px;
+}
+.date { font-weight: bold; color: #fff; font-size: 14px; display: block; margin-bottom: 3px; background: rgba(0,0,0,0.1); width: fit-content; padding: 2px 8px; border-radius: 5px; }
+.event { font-size: 16px; line-height: 1.4; }
 
-        .footer-note { font-size: 14px; font-style: italic; margin-top: 20px; opacity: 0.9; }
-    </style>
+.footer-note { font-size: 14px; font-style: italic; margin-top: 20px; opacity: 0.9; }
+
+/* نص مبهرة في النهاية */
+#magicText {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    color: #fff;
+    text-shadow: 0 0 10px #ff7eb3, 0 0 20px #ff758c, 0 0 30px #fff;
+    opacity: 0;
+    transition: 1s;
+    pointer-events: none;
+}
+</style>
 </head>
 <body>
 
-    <div id="overlay">
-        <button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
+<div id="overlay">
+    <button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
+</div>
+
+<div class="container" id="mainContainer">
+    <h1>لأجمل "ديدا" في الدنيا 🫶 ❤️</h1>
+    <p class="intro">
+        من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني خالص.. 💖<br>
+        عايز أقولك سر صغير.. أنا بحبك أكتر بكتير مما تتخيلي، وده هيفضل السطر المفضل في كتابنا 😏✨
+    </p>
+
+    <div class="counter-box">
+        <span>إحنا مع بعض بقالنا:</span>
+        <div id="timer">تحميل...</div>
     </div>
 
-    <div class="container" id="mainContainer">
-        <h1>لأجمل "ديدا" في الدنيا 🫶 ❤️</h1>
-        <p class="intro">
-            من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني خالص.. 💖<br>
-            عايز أقولك سر صغير.. أنا بحبك أكتر بكتير مما تتخيلي، وده هيفضل السطر المفضل في كتابنا 😏✨
-        </p>
+    <ul class="timeline">
+        <li>
+            <span class="date">24/11/2024</span>
+            <span class="event">😍 اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك).</span>
+        </li>
+        <li>
+            <span class="date">24/12/2024</span>
+            <span class="event">📩 أول "رسالة" قلبت حياتي كلها (بداية كلامنا).</span>
+        </li>
+        <li>
+            <span class="date">26/12/2024</span>
+            <span class="event">🤣 أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً" 😂</span>
+        </li>
+        <li>
+            <span class="date">14/2/2026</span>
+            <span class="event">🤝 أول مقابلة مع بابا.. خطوة العمر 🚶‍♂️🚶</span>
+        </li>
+    </ul>
 
-        <div class="counter-box">
-            <span>إحنا مع بعض بقالنا:</span>
-            <div id="timer">تحميل...</div>
-        </div>
+    <p class="footer-note">كل ثانية وإنتي معايا هي عيد.. ❤️</p>
+</div>
 
-        <ul class="timeline">
-            <li>
-                <span class="date">24/11/2024</span>
-                <span class="event">😍 اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك).</span>
-            </li>
-            <li>
-                <span class="date">24/12/2024</span>
-                <span class="event">📩 أول "رسالة" قلبت حياتي كلها (بداية كلامنا).</span>
-            </li>
-            <li>
-                <span class="date">26/12/2024</span>
-                <span class="event">🤣 أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً" 😂</span>
-            </li>
-            <li>
-                <span class="date">14/2/2026</span>
-                <span class="event">🤝 أول مقابلة مع بابا.. خطوة العمر 🚶‍♂️🚶</span>
-            </li>
-        </ul>
+<audio id="myAudio" loop>
+    <source src="kazdoura.mp3" type="audio/mpeg">
+</audio>
 
-        <p class="footer-note">كل ثانية وإنتي معايا هي عيد.. ❤️</p>
-    </div>
+<div id="magicText">بحبك يا ديدا ❤️✨</div>
 
-    <audio id="myAudio" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        </audio>
+<script>
+const audio = document.getElementById('myAudio');
+const startDate = new Date("2024-11-24T00:00:00");
 
-    <script>
-        function startEverything() {
-            // إخفاء شاشة البداية
-            document.getElementById('overlay').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('overlay').style.display = 'none';
-                document.getElementById('mainContainer').classList.add('show');
-            }, 800);
+// تشغيل كل شيء عند الضغط
+function startEverything() {
+    // إخفاء شاشة البداية
+    const overlay = document.getElementById('overlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        document.getElementById('mainContainer').classList.add('show');
+    }, 800);
 
-            // تشغيل الموسيقى
-            const audio = document.getElementById('myAudio');
-            audio.play().catch(e => console.log("Audio play failed", e));
+    // تشغيل الموسيقى
+    audio.volume = 0.4;
+    audio.play().catch(e => console.log("Audio play failed", e));
 
-            // بدء صنع القلوب
-            setInterval(createHeart, 400);
-        }
+    // صنع قلوب مستمرة
+    setInterval(createHeart, 400);
 
-        // عداد الوقت من 24/11/2024
-        const startDate = new Date("2024-11-24T00:00:00");
-        function updateTimer() {
-            const now = new Date();
-            const diff = now - startDate;
+    // بدء العد
+    setInterval(updateTimer, 1000);
+    updateTimer();
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const mins = Math.floor((diff / 1000 / 60) % 60);
-            const secs = Math.floor((diff / 1000) % 60);
+    // بعد 5 ثواني، عرض نص مبهرة + انفجار قلوب
+    setTimeout(() => {
+        const magic = document.getElementById('magicText');
+        magic.style.opacity = '1';
+        for(let i=0;i<50;i++) createHeart();
+    }, 5000);
 
-            document.getElementById("timer").innerHTML = 
-                `${days} يوم، ${hours} ساعة، ${mins} دقيقة، ${secs} ثانية`;
-        }
-        setInterval(updateTimer, 1000);
-        updateTimer();
+    // تدرج ألوان الخلفية بشكل متواصل
+    setInterval(() => {
+        const hue = Math.floor(Math.random()*360);
+        document.body.style.background = `linear-gradient(135deg, hsl(${hue},80%,70%), hsl(${(hue+60)%360},80%,70%))`;
+    }, 4000);
+}
 
-        // صنع قلوب متحركة
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.className = "heart";
-            heart.innerHTML = ["💖", "💝", "❤️", "💕"][Math.floor(Math.random() * 4)];
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
-        }
-    </script>
+// تحديث العداد
+function updateTimer() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / 1000 / 60) % 60);
+    const secs = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("timer").innerHTML = 
+        `${days} يوم، ${hours} ساعة، ${mins} دقيقة، ${secs} ثانية`;
+}
+
+// صنع قلوب متحركة
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = ["💖","💝","❤️","💕"][Math.floor(Math.random()*4)];
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (16+Math.random()*24)+"px";
+    heart.style.animationDuration = (4 + Math.random()*4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+
+// تشغيل الموسيقى بعد أي نقرة لتجنب منع المتصفح
+document.addEventListener('click', () => {
+    if(audio.paused) audio.play().catch(() => {});
+}, {once:true});
+</script>
+
 </body>
 </html>

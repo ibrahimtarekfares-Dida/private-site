@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <title>For My Love ❤️</title>
 <style>
-  body {
+body {
     font-family: Arial;
     text-align:center;
     background: linear-gradient(135deg,#ff9a9e,#fad0c4);
@@ -13,9 +13,10 @@
     justify-content:center;
     align-items:center;
     margin:0;
-    overflow: hidden; /* عشان الزرار ميهربش بره الشاشة ويعمل Scroll */
-  }
-  .box {
+    overflow: hidden;
+    transition: background 3s linear;
+}
+.box {
     background:white;
     padding:40px;
     border-radius:20px;
@@ -23,8 +24,8 @@
     width:320px;
     position: relative;
     z-index: 10;
-  }
-  input, button {
+}
+input, button {
     padding:12px;
     width:90%;
     margin-top:12px;
@@ -34,28 +35,53 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-  }
-  .btn-login {
+}
+.btn-login {
     background:#ff4d6d;
     color:white;
     border:none;
     cursor:pointer;
-  }
-  .btn-login:hover {
+}
+.btn-login:hover {
     background:#e63956;
-  }
-  
-  /* ستايل زرار الخروج "الهرّاب" */
-  #btn-exit {
+}
+#btn-exit {
     background: #555;
     color: white;
     border: none;
     cursor: pointer;
-    position: absolute; /* عشان يتحرك بحرية */
+    position: absolute;
     width: 100px;
-    transition: 0.1s; /* سرعة القفزة */
+    transition: 0.1s;
     z-index: 100;
-  }
+}
+
+/* قلوب متحركة */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 24px;
+    animation: floatUp 6s linear forwards;
+    opacity: 0.8;
+    pointer-events: none;
+}
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity:1; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity:0; }
+}
+
+/* نص متلألئ */
+#magicText {
+    position: fixed;
+    top:50%; left:50%;
+    transform: translate(-50%, -50%);
+    font-size:36px;
+    color:white;
+    text-shadow: 0 0 10px #ff7eb3, 0 0 20px #ff758c, 0 0 30px #fff;
+    opacity:0;
+    pointer-events:none;
+    transition: 1s;
+}
 </style>
 </head>
 <body>
@@ -69,29 +95,73 @@
   <button id="btn-exit" onmouseover="moveButton()">خروج</button>
 </div>
 
+<div id="magicText">بحبك يا جميل ❤️✨</div>
+
+<audio id="clickSound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
+<audio id="loveSound" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
 <script>
+const exitBtn = document.getElementById('btn-exit');
+const magicText = document.getElementById('magicText');
+const clickSound = document.getElementById('clickSound');
+const loveSound = document.getElementById('loveSound');
+
 function checkPass(){
-  var p=document.getElementById("pass").value;
-  if(p==="20-06-1995"){
-    window.location.href="home.html";
-  }else{
-    alert("قلبك مش معايا ولا ايه؟ 😏");
-  }
+    const p=document.getElementById("pass").value;
+    if(p==="20-06-1995"){
+        // نص متلألئ
+        magicText.style.opacity = 1;
+        magicText.style.transition = "1s";
+        
+        // تشغيل موسيقى حب
+        loveSound.volume = 0.4;
+        loveSound.play().catch(()=>{});
+        
+        // انفجار قلوب
+        for(let i=0;i<50;i++) createHeart();
+
+        // خلفية متدرجة متحركة
+        setInterval(() => {
+            const hue = Math.floor(Math.random()*360);
+            document.body.style.background = `linear-gradient(135deg, hsl(${hue},80%,70%), hsl(${(hue+60)%360},80%,70%))`;
+        }, 3000);
+
+        alert("قلبك فتحلي يا جميل ❤️");
+    } else {
+        clickSound.play();
+        alert("قلبك مش معايا 😏 حاول تاني!");
+    }
 }
 
 // وظيفة هروب الزرار
 function moveButton() {
-    var btn = document.getElementById('btn-exit');
-    
-    // حساب عرض وطول الشاشة عشان الزرار ميهربش براها خالص
-    var x = Math.random() * (window.innerWidth - btn.clientWidth);
-    var y = Math.random() * (window.innerHeight - btn.clientHeight);
-    
-    btn.style.position = 'fixed'; // خليه يتحرك في الشاشة كلها
+    clickSound.play();
+    const btn = exitBtn;
+    const x = Math.random() * (window.innerWidth - btn.clientWidth);
+    const y = Math.random() * (window.innerHeight - btn.clientHeight);
+    btn.style.position = 'fixed';
     btn.style.left = x + 'px';
     btn.style.top = y + 'px';
+    // تغيير لون وحجم بشكل عشوائي
+    btn.style.background = `hsl(${Math.random()*360},70%,50%)`;
+    btn.style.transform = `scale(${0.8 + Math.random()*0.4})`;
 }
-</script>
 
+// إنشاء قلوب متحركة
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = ["💖","💝","❤️","💕"][Math.floor(Math.random()*4)];
+    heart.style.left = Math.random()*100+"vw";
+    heart.style.fontSize = (16+Math.random()*24)+"px";
+    heart.style.animationDuration = (4+Math.random()*4)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+
+// توليد قلوب مستمرة بشكل خفيف
+setInterval(createHeart, 800);
+
+</script>
 </body>
 </html>

@@ -2,33 +2,21 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Private Site</title>
+<title>مرحبا</title>
 <style>
 body {
   font-family: Arial;
   text-align: center;
-  margin-top: 100px;
   background: #f5f6fa;
+  margin-top: 100px;
 }
 .box {
   background: white;
   padding: 40px;
-  width: 300px;
+  width: 400px;
   margin: auto;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-input, button {
-  padding: 10px;
-  font-size: 18px;
-  width: 90%;
-  margin-top: 10px;
-}
-button {
-  cursor: pointer;
-  background: #2f80ed;
-  color: white;
-  border: none;
 }
 </style>
 </head>
@@ -36,22 +24,9 @@ button {
 <body>
 
 <div class="box">
-<h2>الموقع محمي بكلمة سر</h2>
-
-<input type="password" id="pass" placeholder="اكتب كلمة السر">
-<button onclick="checkPass()">دخول</button>
+<h1>أهلاً بيك 🔥</h1>
+<p>الموقع اشتغل بنجاح</p>
 </div>
-
-<script>
-function checkPass() {
-  var p = document.getElementById("pass").value;
-  if (p === "1234") {
-    window.location.href = "home.html";
-  } else {
-    alert("كلمة السر غلط");
-  }
-}
-</script>
 
 </body>
 </html>

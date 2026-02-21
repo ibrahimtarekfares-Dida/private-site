@@ -1,45 +1,52 @@
-<audio id="bgMusic" loop>
-    <source src="kazdoura.mp3" type="audio/mpeg">
-</audio>
+<button id="musicBtn" style="padding: 10px 20px; border-radius: 50px; border: none; background: white; color: #ff4d6d; font-weight: bold; cursor: pointer; margin-top: 20px;">
+    🎵 اغنيتنا (كزدورة) ❤️
+</button>
 
-<button id="musicBtn">🎵 تشغيل الموسيقى</button>
+<div id="love-note" style="margin-top: 30px; font-style: italic; font-size: 18px; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.2);">
+    "إنتي أحلى حاجة حصلتلي.."
+</div>
 
 <script>
     const music = document.getElementById("bgMusic");
     const btn = document.getElementById("musicBtn");
+    const noteElement = document.getElementById("love-note");
 
-    // تشغيل الموسيقى بعد أي تفاعل أول مرة
+    // قائمة رسايل حب عشوائية
+    const notes = [
+        "إنتي أحلى حاجة حصلتلي في 2024.. وفي كل السنين ❤️",
+        "ضحكتك هي السر اللي بيخلي دنيتي أهدى 😏✨",
+        "كل ثانية وإنتي معايا هي مكسب ليا 💖",
+        "مستني اليوم اللي نتمشى فيه كزدورة ونحكي حكايتنا 🚶‍♂️🚶‍♀️",
+        "بالمناسبة.. وحشتيني جداً دلوقتي! 😍"
+    ];
+
+    // تغيير الرسالة كل 5 ثواني
+    setInterval(() => {
+        const randomNote = notes[Math.floor(Math.random() * notes.length)];
+        noteElement.style.opacity = 0;
+        setTimeout(() => {
+            noteElement.innerHTML = `"${randomNote}"`;
+            noteElement.style.opacity = 1;
+        }, 500);
+    }, 5000);
+
+    // كود الموسيقى والقلوب بتاعك زي ما هو (كمل بيه هنا)
     function initMusic() {
-        music.volume = 0.4; // صوت خافت
-        music.play().catch(() => {}); // لو المتصفح منع التشغيل التلقائي
+        music.volume = 0.4;
+        music.play().catch(() => {});
         document.removeEventListener('click', initMusic);
     }
     document.addEventListener('click', initMusic);
 
-    // زر التشغيل والإيقاف
     btn.addEventListener('click', () => {
         if (music.paused) {
             music.play();
-            btn.innerHTML = "⏸ إيقاف الموسيقى";
-            btn.style.transform = "scale(1.1)";
-            setTimeout(() => btn.style.transform = "scale(1)", 150);
+            btn.innerHTML = "⏸ إيقاف الأغنية";
         } else {
             music.pause();
-            btn.innerHTML = "🎵 تشغيل الموسيقى";
-            btn.style.transform = "scale(0.9)";
-            setTimeout(() => btn.style.transform = "scale(1)", 150);
+            btn.innerHTML = "🎵 كزدورة سوا ❤️";
         }
     });
-
-    // توليد القلوب بشكل أكثر ديناميكية
-    setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (16 + Math.random() * 24) + "px";
-        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 8000);
-    }, 400);
+    
+    // كود القلوب...
 </script>

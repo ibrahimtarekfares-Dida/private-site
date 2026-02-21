@@ -2,21 +2,52 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>مرحبا</title>
+<title>بحبك ❤️</title>
+
 <style>
-body {
+body{
+  margin:0;
   font-family: Arial;
-  text-align: center;
-  background: #f5f6fa;
-  margin-top: 100px;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:white;
 }
-.box {
-  background: white;
-  padding: 40px;
-  width: 400px;
-  margin: auto;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+/* القلوب المتحركة */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:24px;
+  animation: floatUp 6s linear infinite;
+  opacity:0.7;
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(1);}
+  100%{transform:translateY(-110vh) scale(1.5);}
+}
+
+.box{
+  background: rgba(255,255,255,0.15);
+  padding:50px;
+  border-radius:25px;
+  backdrop-filter: blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+p{
+  font-size:20px;
+  line-height:1.6;
 }
 </style>
 </head>
@@ -24,9 +55,28 @@ body {
 <body>
 
 <div class="box">
-<h1>أهلاً بيك 🔥</h1>
-<p>الموقع اشتغل بنجاح</p>
+  <h1>لأجمل واحدة في الدنيا ❤️</h1>
+  <p>
+    من يوم ما دخلتي حياتي  
+    والدنيا بقت أهدى وأحلى 💖<br><br>
+    بحبك أكتر مما تتخيلي…  
+    وده سر صغير بيني وبينك 😏✨
+  </p>
 </div>
+
+<script>
+// توليد قلوب متحركة
+setInterval(()=>{
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="💖";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(4+Math.random()*3)+"s";
+  document.body.appendChild(heart);
+
+  setTimeout(()=>heart.remove(),7000);
+},500);
+</script>
 
 </body>
 </html>

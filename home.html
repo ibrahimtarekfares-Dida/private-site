@@ -2,13 +2,13 @@
     <source src="kazdoura.mp3" type="audio/mpeg">
 </audio>
 
-<button id="musicBtn">🎵 تشغيل الموسيقى</button>
+<button id="musicBtn">Play ❤️🎵</button>
 
 <script>
     const music = document.getElementById("bgMusic");
     const btn = document.getElementById("musicBtn");
 
-    // تشغيل الموسيقى بعد أي تفاعل أول مرة
+    // تشغيل الموسيقى بعد أي تفاعل أول مرة (لحل مشكلة المتصفحات)
     function initMusic() {
         music.volume = 0.4; // صوت خافت
         music.play().catch(() => {}); // لو المتصفح منع التشغيل التلقائي
@@ -16,16 +16,16 @@
     }
     document.addEventListener('click', initMusic);
 
-    // زر التشغيل والإيقاف
+    // زر التشغيل والإيقاف مع تغيير النص والأيقونات
     btn.addEventListener('click', () => {
         if (music.paused) {
             music.play();
-            btn.innerHTML = "⏸ إيقاف الموسيقى";
+            btn.innerHTML = "Pause ❤️🎵";
             btn.style.transform = "scale(1.1)";
             setTimeout(() => btn.style.transform = "scale(1)", 150);
         } else {
             music.pause();
-            btn.innerHTML = "🎵 تشغيل الموسيقى";
+            btn.innerHTML = "Play ❤️🎵";
             btn.style.transform = "scale(0.9)";
             setTimeout(() => btn.style.transform = "scale(1)", 150);
         }

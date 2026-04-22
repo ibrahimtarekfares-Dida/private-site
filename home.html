@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بحبك ❤️</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Amiri:ital@1&display=swap" rel="stylesheet">
+
 <style>
 :root {
     --primary-color: #ff758c;
@@ -21,18 +23,19 @@ body {
     align-items: center;
     color: white;
     overflow-x: hidden;
-    transition: background 3s linear;
+    transition: background 3s ease-in-out;
 }
 
+/* 🎬 cinematic intro */
 #overlay {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: #ff758c;
+    inset: 0;
+    background: radial-gradient(circle, #ff7eb3, #ff758c);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 100;
-    transition: 0.8s;
+    transition: 1s;
 }
 
 #overlay button {
@@ -43,11 +46,15 @@ body {
     background: white;
     color: #ff758c;
     cursor: pointer;
-    font-family: 'Tajawal';
     font-weight: bold;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+#overlay button:hover {
+    transform: scale(1.05);
 }
 
+/* 💖 hearts */
 .heart {
     position: fixed;
     bottom: -20px;
@@ -56,12 +63,12 @@ body {
     opacity: 0.7;
     pointer-events: none;
 }
-
 @keyframes floatUp {
     0% { transform: translateY(0) rotate(0deg); opacity: 1; }
     100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
 
+/* 💗 container */
 .container {
     background: rgba(255, 255, 255, 0.15);
     padding: 40px 20px;
@@ -71,57 +78,91 @@ body {
     max-width: 450px;
     width: 85%;
     text-align: center;
-    border: 1px solid rgba(255,255,255,0.3);
-    z-index: 10;
     opacity: 0;
-    transform: translateY(20px);
-    transition: 1s ease-out;
+    transform: translateY(30px);
+    transition: 1s ease;
+}
+.container.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.container.show { opacity: 1; transform: translateY(0); }
+h1 { font-size: 28px; }
 
-h1 { font-size: 28px; margin-bottom: 10px; }
-.intro { font-size: 17px; line-height: 1.6; margin-bottom: 25px; }
+.intro {
+    font-size: 17px;
+    line-height: 1.7;
+}
 
+/* ⏳ timer */
 .counter-box {
-    background: rgba(255, 255, 255, 0.2);
+    margin: 20px 0;
     padding: 15px;
     border-radius: 20px;
-    margin-bottom: 30px;
+    background: rgba(255,255,255,0.2);
 }
-#timer { font-size: 19px; font-weight: bold; direction: ltr; display: block; margin-top: 5px; }
 
-.timeline { text-align: right; list-style: none; padding: 0; border-right: 2px solid rgba(255,255,255,0.5); }
+/* 📜 timeline */
+.timeline {
+    list-style: none;
+    padding: 0;
+    border-right: 2px solid rgba(255,255,255,0.4);
+    text-align: right;
+}
+
 .timeline li {
     margin-bottom: 20px;
     padding-right: 15px;
-    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.6s ease;
 }
+
+.timeline li.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .timeline li::before {
     content: "❤️";
     position: absolute;
     right: -12px;
-    top: 0;
-    font-size: 12px;
 }
-.date { font-weight: bold; color: #fff; font-size: 14px; display: block; margin-bottom: 3px; background: rgba(0,0,0,0.1); width: fit-content; padding: 2px 8px; border-radius: 5px; }
-.event { font-size: 16px; line-height: 1.4; }
 
-.footer-note { font-size: 14px; font-style: italic; margin-top: 20px; opacity: 0.9; }
+.date {
+    font-weight: bold;
+    background: rgba(0,0,0,0.15);
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
 
+.event { font-size: 15px; line-height: 1.5; }
+
+/* ✨ highlight trip */
+.highlight {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+/* 💖 magic text */
 #magicText {
     position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 36px;
-    color: #fff;
-    text-shadow: 0 0 10px #ff7eb3, 0 0 20px #ff758c, 0 0 30px #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 34px;
     opacity: 0;
     transition: 1s;
+    text-shadow: 0 0 20px #fff;
     pointer-events: none;
 }
 </style>
 </head>
+
 <body>
 
 <div id="overlay">
@@ -129,108 +170,153 @@ h1 { font-size: 28px; margin-bottom: 10px; }
 </div>
 
 <div class="container" id="mainContainer">
-    <h1>لأجمل "ديدا" في الدنيا 🫶 ❤️</h1>
-    <p class="intro">
-        من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني خالص.. 💖<br>
-        عايز أقولك سر صغير.. أنا بحبك أكتر بكتير مما تتخيلي، وده هيفضل السطر المفضل في كتابنا 😏✨
-    </p>
 
-    <div class="counter-box">
-        <span>إحنا مع بعض بقالنا:</span>
-        <div id="timer">تحميل...</div>
-    </div>
+<h1>لأجمل "ديدا" في الدنيا 🫶</h1>
 
-    <ul class="timeline">
-        <li>
-            <span class="date">24/11/2024</span>
-            <span class="event">😍 اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك).</span>
-        </li>
-        <li>
-            <span class="date">24/12/2024</span>
-            <span class="event">📩 أول "رسالة" قلبت حياتي كلها (بداية كلامنا).</span>
-        </li>
-        <li>
-            <span class="date">26/12/2024</span>
-            <span class="event">🤣 أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً" 😂</span>
-        </li>
-        <li>
-            <span class="date">14/02/2026</span>
-            <span class="event">🤝 أول مقابلة مع بابا.. خطوة العمر 🚶‍♂️🚶</span>
-        </li>
-        <li>
-            <span class="date">08/04/2026</span>
-            <span class="event">📖✨ يوم قراءة الفاتحة.. بداية حكايتنا الرسمية ❤️🤍</span>
-        </li>
-    </ul>
+<p class="intro">
+من يوم ما دخلتي حياتي والدنيا بقت أجمل… 💖<br>
+بحبك بطريقة مش بتتشرح، بس بتتحس ✨
+</p>
 
-    <p class="footer-note">كل ثانية وإنتي معايا هي عيد.. ❤️</p>
+<div class="counter-box">
+    <div>إحنا مع بعض بقالنا:</div>
+    <div id="timer"></div>
 </div>
 
-<audio id="myAudio" loop>
-    <source src="kazdoura.mp3" type="audio/mpeg">
-</audio>
+<ul class="timeline">
+
+<li>
+<span class="date">24/11/2024</span>
+<div class="event">😍 أول مرة شوفتك</div>
+</li>
+
+<li>
+<span class="date">24/12/2024</span>
+<div class="event">📩 بداية كلامنا</div>
+</li>
+
+<li>
+<span class="date">26/12/2024</span>
+<div class="event">🤣 أول هزار بينا</div>
+</li>
+
+<li>
+<span class="date">14/02/2026</span>
+<div class="event">🤝 أول مقابلة مع بابا</div>
+</li>
+
+<li class="highlight">
+<span class="date">07/02/2026</span>
+<div class="event">🏖️❤️ رحلة الإسكندرية.. يومين من أحلى أيام حياتي معاكي 🤍✨</div>
+</li>
+
+<li>
+<span class="date">08/04/2026</span>
+<div class="event">📖 يوم الفاتحة ❤️ بداية حكايتنا</div>
+</li>
+
+</ul>
+
+<p class="footer-note">كل لحظة معاكي = حياة 💖</p>
+
+</div>
 
 <div id="magicText">بحبك يا ديدا ❤️✨</div>
 
+<audio id="myAudio" loop>
+<source src="kazdoura.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-const audio = document.getElementById('myAudio');
-const startDate = new Date("2024-11-24T00:00:00");
+
+const audio = document.getElementById("myAudio");
+const startDate = new Date("2024-11-24");
 
 function startEverything() {
-    const overlay = document.getElementById('overlay');
-    overlay.style.opacity = '0';
-    setTimeout(() => {
-        overlay.style.display = 'none';
-        document.getElementById('mainContainer').classList.add('show');
-    }, 800);
 
-    audio.volume = 0.4;
-    audio.play().catch(e => console.log("Audio play failed", e));
+document.getElementById("overlay").style.opacity = "0";
+setTimeout(()=>document.getElementById("overlay").style.display="none",800);
 
-    setInterval(createHeart, 400);
+document.getElementById("mainContainer").classList.add("show");
 
-    setInterval(updateTimer, 1000);
-    updateTimer();
+audio.volume = 0.4;
+audio.play().catch(()=>{});
 
-    setTimeout(() => {
-        const magic = document.getElementById('magicText');
-        magic.style.opacity = '1';
-        for(let i=0;i<50;i++) createHeart();
-    }, 5000);
+/* 💖 hearts */
+setInterval(createHeart, 300);
 
-    setInterval(() => {
-        const hue = Math.floor(Math.random()*360);
-        document.body.style.background = `linear-gradient(135deg, hsl(${hue},80%,70%), hsl(${(hue+60)%360},80%,70%))`;
-    }, 4000);
+/* ⏳ timer */
+setInterval(updateTimer, 1000);
+updateTimer();
+
+/* ✨ magic */
+setTimeout(()=>{
+document.getElementById("magicText").style.opacity="1";
+burstHearts();
+confetti();
+},4000);
+
+/* 🌈 cinematic background */
+setInterval(()=>{
+let h = Math.random()*360;
+document.body.style.background =
+`linear-gradient(135deg,hsl(${h},80%,70%),hsl(${h+60},80%,70%))`;
+},5000);
+
+/* 📜 reveal timeline */
+document.querySelectorAll(".timeline li").forEach((el,i)=>{
+setTimeout(()=>el.classList.add("show"), i*600);
+});
+
 }
 
-function updateTimer() {
-    const now = new Date();
-    const diff = now - startDate;
+/* ⏳ timer */
+function updateTimer(){
+let diff = new Date() - startDate;
+let d = Math.floor(diff/86400000);
+let h = Math.floor(diff/3600000)%24;
+let m = Math.floor(diff/60000)%60;
+let s = Math.floor(diff/1000)%60;
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / 1000 / 60) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
-
-    document.getElementById("timer").innerHTML = 
-        `${days} يوم، ${hours} ساعة، ${mins} دقيقة، ${secs} ثانية`;
+document.getElementById("timer").innerHTML =
+`${d} يوم - ${h} ساعة - ${m} دقيقة - ${s} ثانية`;
 }
 
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = ["💖","💝","❤️","💕"][Math.floor(Math.random()*4)];
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (16+Math.random()*24)+"px";
-    heart.style.animationDuration = (4 + Math.random()*4) + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
+/* 💖 hearts */
+function createHeart(){
+let h = document.createElement("div");
+h.className="heart";
+h.innerHTML=["💖","❤️","💕","💝"][Math.floor(Math.random()*4)];
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(16+Math.random()*20)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
 }
 
-document.addEventListener('click', () => {
-    if(audio.paused) audio.play().catch(() => {});
-}, {once:true});
+/* ✨ burst hearts */
+function burstHearts(){
+for(let i=0;i<40;i++) createHeart();
+}
+
+/* 🎉 confetti simple */
+function confetti(){
+for(let i=0;i<30;i++){
+let c=document.createElement("div");
+c.innerHTML="✨";
+c.style.position="fixed";
+c.style.left=Math.random()*100+"vw";
+c.style.top="-10px";
+c.style.fontSize="20px";
+c.style.animation="floatUp 4s linear";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),4000);
+}
+}
+
+document.addEventListener("click",()=>{
+if(audio.paused) audio.play().catch(()=>{});
+},{once:true});
+
 </script>
 
 </body>

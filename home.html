@@ -8,10 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+:root{
+--primary:#ff758c;
+--secondary:#ff7eb3;
+}
+
+*{box-sizing:border-box}
+
 body{
 margin:0;
 font-family:'Tajawal',sans-serif;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
+background:linear-gradient(135deg,var(--primary),var(--secondary));
 min-height:100vh;
 display:flex;
 justify-content:center;
@@ -22,25 +29,84 @@ transition:2s;
 padding:20px;
 }
 
-canvas{
+/* نجوم */
+#sky{
 position:fixed;
 inset:0;
 z-index:0;
 }
 
+/* باقي الاسكريبت الأساسي زي ما هو */
+#loader{
+position:fixed;
+inset:0;
+background:#ff758c;
+z-index:999;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-size:22px;
+gap:15px;
+}
+
+.bar{
+width:260px;
+height:18px;
+border:2px solid #fff;
+border-radius:20px;
+overflow:hidden;
+}
+
+.bar-fill{
+height:100%;
+width:0%;
+background:#fff;
+transition:3s linear;
+}
+
+#overlay{
+position:fixed;
+inset:0;
+background:#ff758c;
+display:none;
+justify-content:center;
+align-items:center;
+z-index:500;
+}
+
+#overlay button{
+padding:16px 30px;
+font-size:22px;
+border:none;
+border-radius:50px;
+background:#fff;
+color:#ff758c;
+font-weight:bold;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.08)}
+100%{transform:scale(1)}
+}
+
 .container{
-position:relative;
-z-index:2;
 background:rgba(255,255,255,.15);
-padding:30px;
-border-radius:25px;
-backdrop-filter:blur(10px);
-max-width:500px;
-width:95%;
+padding:35px 20px;
+border-radius:30px;
+backdrop-filter:blur(15px);
+max-width:470px;
+width:92%;
 text-align:center;
+border:1px solid rgba(255,255,255,.3);
+box-shadow:0 15px 35px rgba(0,0,0,.2);
 opacity:0;
 transform:translateY(20px);
 transition:1s;
+position:relative;
+z-index:2;
 }
 
 .container.show{
@@ -48,50 +114,64 @@ opacity:1;
 transform:translateY(0);
 }
 
-button{
-cursor:pointer;
-border:none;
-border-radius:25px;
-padding:10px 15px;
-font-weight:bold;
-margin:5px;
-}
+h1{margin:0 0 15px;font-size:28px}
 
-.action{
+.intro{line-height:1.8;font-size:17px;min-height:95px}
+
+button.action{
+padding:12px 20px;
+border:none;
+border-radius:30px;
+font-size:18px;
+cursor:pointer;
 background:#fff;
 color:#ff4b7d;
+font-weight:bold;
+margin:8px 4px;
 }
 
+/* popup */
 #popup{
 position:fixed;
 inset:0;
+background:rgba(0,0,0,.55);
 display:none;
 justify-content:center;
 align-items:center;
-background:rgba(0,0,0,.6);
-z-index:999;
+z-index:700;
 }
 
 .popup-box{
 background:#fff;
 color:#ff4b7d;
-padding:20px;
-border-radius:20px;
+padding:25px;
+border-radius:25px;
 text-align:center;
+font-size:22px;
 font-weight:bold;
 }
 
-.particle{
+/* قلوب + نجوم */
+.heart{
 position:fixed;
 pointer-events:none;
-animation:fly 3s linear forwards;
-font-size:20px;
+font-size:22px;
+animation:fly 2.5s linear forwards;
+z-index:50;
 }
 
 @keyframes fly{
-0%{transform:translateY(0);opacity:1}
-100%{transform:translateY(-200px);opacity:0}
+0%{transform:translateY(0) scale(.7);opacity:1}
+100%{transform:translateY(-130px) scale(1.5);opacity:0}
 }
+
+#dailyMsgBox{
+margin-top:10px;
+background:rgba(255,255,255,.2);
+padding:10px;
+border-radius:15px;
+}
+
 </style>
 </head>
 
@@ -99,64 +179,87 @@ font-size:20px;
 
 <canvas id="sky"></canvas>
 
+<!-- تحميل -->
+<div id="loader">
+<div>جارٍ تحميل كمية الحب... ❤️</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<div id="percent">0%</div>
+</div>
+
+<!-- البداية -->
+<div id="overlay">
+<button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
+</div>
+
+<!-- المحتوى -->
 <div class="container" id="mainContainer">
 
-<h2>لأجمل ديدا ❤️</h2>
+<h1>لأجمل ديدا في الدنيا 🫶❤️</h1>
 
-<p id="typed"></p>
+<p id="typedText"></p>
 
 <button class="action" onclick="dailyMessage()">رسالة اليوم ❤️</button>
-<div id="dailyBox"></div>
+<div id="dailyMsgBox"></div>
 
 <br>
 
-<button class="action" onclick="loveCount()">قد إيه بحبك؟ 😍</button>
-<div id="loveBox"></div>
-
-<br>
-
+<button class="action" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
 <button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
 
 </div>
 
-<div id="popup" onclick="this.style.display='none'">
+<!-- popup -->
+<div id="popup" onclick="closeGift()">
 <div class="popup-box">
 أنا محظوظ إنك في حياتي ❤️<br>
 الجاي أجمل ✨
 </div>
 </div>
 
+<!-- صوت -->
+<audio id="clickSound">
+<source src="click.mp3">
+</audio>
+
 <script>
 
-/* ====== تشغيل الصفحة ====== */
-window.onload=()=>{
-document.getElementById("mainContainer").classList.add("show");
+const startDate=new Date("2024-11-24T00:00:00");
+const clickSound=document.getElementById("clickSound");
+
+/* تحميل */
+let p=0;
+let load=setInterval(()=>{
+p++;
+percent.innerText=p+"%";
+barFill.style.width=p+"%";
+if(p>=100){
+clearInterval(load);
+loader.style.display="none";
+overlay.style.display="flex";
+}
+},30);
+
+/* تشغيل */
+function startEverything(){
+overlay.style.display="none";
+mainContainer.classList.add("show");
 startSky();
-};
-
-/* ====== عداد حب ====== */
-let love=0;
-function loveCount(){
-love++;
-document.getElementById("loveBox").innerText=`بحبك ${love} مرة ولسه 😍`;
+typeWriter();
+updateTimer();
+setInterval(updateTimer,1000);
 }
 
-/* ====== رسائل يومية ====== */
-const messages=[
-"وجودك في حياتي نعمة كبيرة ❤️",
-"كل يوم معاكي بحبك أكتر 😍",
-"أجمل صدفة حصلتلي اني عرفتك 💖",
-"إنتي راحتي وسندي وكل دنيتي 🫶",
-"أنتي أحلى حاجة حصلتلي ✨"
-];
+/* كتابة */
+const introText="من يوم ما دخلتي حياتي والدنيا بقت أحلى ❤️";
 
-function dailyMessage(){
-let d=new Date().getDate();
-document.getElementById("dailyBox").innerText=
-messages[d % messages.length];
+function typeWriter(i=0){
+if(i<introText.length){
+typedText.innerHTML+=introText.charAt(i);
+setTimeout(()=>typeWriter(i+1),40);
+}
 }
 
-/* ====== نجوم ====== */
+/* نجوم */
 function startSky(){
 const c=document.getElementById("sky");
 const ctx=c.getContext("2d");
@@ -174,37 +277,63 @@ r:Math.random()*2
 
 function draw(){
 ctx.clearRect(0,0,c.width,c.height);
-
 for(let s of stars){
-ctx.fillStyle="white";
+ctx.fillStyle="#fff";
 ctx.beginPath();
 ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
 ctx.fill();
-
 s.y+=0.3;
 if(s.y>c.height)s.y=0;
 }
-
 requestAnimationFrame(draw);
 }
 draw();
 }
 
-/* ====== مفاجأة ====== */
-function openGift(){
-document.getElementById("popup").style.display="flex";
+/* عداد */
+function updateTimer(){
+const now=new Date();
+const diff=now-startDate;
+
+const d=Math.floor(diff/86400000);
+const h=Math.floor(diff/3600000)%24;
+const m=Math.floor(diff/60000)%60;
+const s=Math.floor(diff/1000)%60;
+
+timer.innerText=`${d} يوم ${h} ساعة ${m} دقيقة ${s} ثانية`;
 }
 
-/* ====== قلوب + نجوم عند الضغط ====== */
+/* رسائل يومية */
+const messages=[
+"وجودك في حياتي نعمة ❤️",
+"كل يوم بحبك أكتر 😍",
+"أجمل صدفة عرفتك 💖",
+"إنتي راحتي 🫶"
+];
+
+function dailyMessage(){
+const d=new Date().getDate();
+dailyMsgBox.innerText=messages[d % messages.length];
+}
+
+/* مفاجأة */
+function openGift(){
+popup.style.display="flex";
+}
+
+function closeGift(){
+popup.style.display="none";
+}
+
+/* قلوب */
 document.addEventListener("click",(e)=>{
-let el=document.createElement("div");
-el.className="particle";
-el.innerHTML=Math.random()>0.5?"❤️":"⭐";
+const el=document.createElement("div");
+el.className="heart";
+el.innerHTML=["❤️","💖","⭐"][Math.floor(Math.random()*3)];
 el.style.left=e.clientX+"px";
 el.style.top=e.clientY+"px";
 document.body.appendChild(el);
-
-setTimeout(()=>el.remove(),3000);
+setTimeout(()=>el.remove(),2500);
 });
 
 </script>

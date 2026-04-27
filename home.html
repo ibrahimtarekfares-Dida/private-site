@@ -8,28 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
---primary:#ff758c;
---secondary:#ff7eb3;
-}
-
-*{box-sizing:border-box}
-
 body{
 margin:0;
 font-family:'Tajawal',sans-serif;
-min-height:100vh;
-overflow:hidden;
-color:#fff;
-transition:2s;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
 background:linear-gradient(135deg,#ff758c,#ff7eb3);
+color:#fff;
+overflow-x:hidden;
+scroll-behavior:smooth;
 }
 
-/* اسم ديدا المتحرك */
+/* اسم الخلفية */
 .name-bg{
 position:fixed;
 inset:0;
@@ -37,85 +25,39 @@ display:flex;
 justify-content:center;
 align-items:center;
 font-size:80px;
-opacity:.06;
+opacity:.05;
 font-weight:bold;
-animation:floatName 6s infinite alternate;
 pointer-events:none;
 }
 
-@keyframes floatName{
-0%{transform:translateY(0)}
-100%{transform:translateY(-20px)}
-}
-
-/* شاشة التحميل */
-#loader{
-position:fixed;
-inset:0;
-background:#ff758c;
-z-index:999;
+/* أقسام */
+section{
+min-height:100vh;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-gap:15px;
+padding:20px;
 }
 
-.bar{width:260px;height:18px;border:2px solid #fff;border-radius:20px;overflow:hidden}
-.bar-fill{height:100%;width:0%;background:#fff;transition:3s}
-
-/* البداية */
-#overlay{
-position:fixed;
-inset:0;
-background:#ff758c;
-display:none;
-justify-content:center;
-align-items:center;
-z-index:500;
-}
-
-#overlay button{
-padding:16px 30px;
-font-size:22px;
-border:none;
-border-radius:50px;
-background:#fff;
-color:#ff758c;
-font-weight:bold;
-animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.1)}
-100%{transform:scale(1)}
-}
-
-.container{
+/* الكونتينر */
+.box{
 background:rgba(255,255,255,.15);
-padding:30px 20px;
-border-radius:25px;
-backdrop-filter:blur(12px);
-max-width:500px;
+padding:25px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+max-width:520px;
 width:95%;
 text-align:center;
-opacity:0;
-transform:translateY(20px);
-transition:1s;
-position:relative;
-z-index:2;
 }
 
-.container.show{opacity:1;transform:translateY(0)}
-
+/* أزرار */
 button{
-cursor:pointer;
+margin:8px;
+padding:12px 16px;
 border:none;
 border-radius:30px;
-padding:10px 15px;
-margin:5px;
 font-weight:bold;
+cursor:pointer;
 }
 
 .action{
@@ -123,212 +65,151 @@ background:#fff;
 color:#ff4b7d;
 }
 
-/* popup */
-#popup{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:700;
+/* قسم الذكريات */
+.timeline{
+list-style:none;
+padding:0;
+text-align:right;
+border-right:2px solid rgba(255,255,255,.5);
+margin-top:20px;
 }
 
-.popup-box{
+.timeline li{
+padding-right:15px;
+margin-bottom:15px;
+}
+
+.date{
+display:inline-block;
+background:rgba(0,0,0,.2);
+padding:3px 8px;
+border-radius:6px;
+font-size:13px;
+margin-bottom:5px;
+}
+
+/* زر الرجوع */
+.back-btn{
 background:#fff;
 color:#ff4b7d;
-padding:20px;
-border-radius:20px;
-text-align:center;
-font-weight:bold;
 }
-
-/* زر رسالة اليوم */
-#dailyMsgBox{
-margin-top:10px;
-background:rgba(255,255,255,.2);
-padding:10px;
-border-radius:15px;
-}
-
-/* قلوب + نجوم */
-.particle{
-position:fixed;
-pointer-events:none;
-animation:fly 3s linear forwards;
-}
-
-@keyframes fly{
-0%{transform:translateY(0) scale(.6);opacity:1}
-100%{transform:translateY(-200px) scale(1.5);opacity:0}
-}
-
-/* Canvas نجوم */
-#sky{
-position:fixed;
-inset:0;
-z-index:0;
-}
-
-/* الليل */
-.night{
-background:linear-gradient(135deg,#0b0f2a,#1a1f3a) !important;
-}
-
 </style>
 </head>
 
 <body>
 
-<canvas id="sky"></canvas>
-
 <div class="name-bg">ديدا</div>
 
-<div id="loader">
-<div>جارٍ تحميل الحب ❤️</div>
-<div class="bar"><div class="bar-fill" id="barFill"></div></div>
-<div id="percent">0%</div>
-</div>
+<!-- ========== القسم الأول ========== -->
+<section id="home">
 
-<div id="overlay">
-<button onclick="startEverything()">مرحبًا بأجمل ديدا في الدنيا ❤️</button>
-</div>
-
-<div class="container" id="mainContainer">
+<div class="box">
 
 <h2>لأجمل ديدا ❤️</h2>
 
-<p id="typed"></p>
-
-<button class="action" onclick="dailyMessage()">رسالة اليوم ❤️</button>
-<div id="dailyMsgBox"></div>
-
-<br>
-
-<button class="action" onclick="loveCount()">❤️ بحبك كام مرة؟</button>
-<div id="countLove"></div>
-
-<br>
+<p>من يوم ما دخلتي حياتي والدنيا بقت أحلى 🫶</p>
 
 <button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
 
+<button class="action" onclick="goMemory()">❤️ افتحي عالم تاني</button>
+
 </div>
 
-<div id="popup" onclick="this.style.display='none'">
-<div class="popup-box">
+</section>
+
+<!-- popup -->
+<div id="popup" style="
+position:fixed;
+inset:0;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.6);
+">
+
+<div style="
+background:#fff;
+color:#ff4b7d;
+padding:25px;
+border-radius:20px;
+text-align:center;
+font-weight:bold;
+max-width:300px;
+">
 أنا محظوظ إنك في حياتي ❤️<br>
 الجاي أجمل ✨
-</div>
+<br><br>
+<button onclick="closeGift()">إغلاق</button>
 </div>
 
-<audio id="click"><source src="click.mp3"></audio>
+</div>
+
+<!-- ========== القسم الثاني ========== -->
+<section id="memory">
+
+<div class="box">
+
+<h2>ذكرياتنا ❤️</h2>
+
+<p>كل لحظة معاكي ليها معنى ✨</p>
+
+<ul class="timeline">
+<li><span class="date">24/11/2024</span> أول مرة شوفتك ❤️</li>
+<li><span class="date">24/12/2024</span> بداية كلامنا 📩</li>
+<li><span class="date">07/02/2026</span> رحلة اسكندرية 🏖️</li>
+<li><span class="date">14/02/2026</span> لحظة العمر 🤝</li>
+</ul>
+
+<button class="back-btn" onclick="goHome()">🔙 رجوع</button>
+
+</div>
+
+</section>
 
 <script>
-
-let c=0;
-function loveCount(){
-c++;
-document.getElementById("countLove").innerText=c+" مرة ولسه 😍";
-}
-
-/* رسائل يومية */
-const messages=[
-"وجودك في حياتي نعمة كبيرة ❤️",
-"كل يوم معاكي بحبك أكتر 😍",
-"أجمل صدفة حصلتلي اني عرفتك 💖",
-"إنتي راحتي وسندي وكل دنيتي 🫶",
-"أنا فخور بيكي ❤️",
-"وجودك بيهون الدنيا 😍",
-"بحب تفاصيلك كلها 💖",
-"أنتي أحلى حاجة حصلتلي ✨"
-];
-
-function dailyMessage(){
-const day=new Date().getDate();
-const msg=messages[day % messages.length];
-document.getElementById("dailyMsgBox").innerText=msg;
-}
-
-/* تحميل */
-let p=0;
-let load=setInterval(()=>{
-p++;
-percent.innerText=p+"%";
-barFill.style.width=p+"%";
-if(p>=100){
-clearInterval(load);
-loader.style.display="none";
-overlay.style.display="flex";
-}
-},30);
-
-/* تشغيل */
-function startEverything(){
-overlay.style.display="none";
-mainContainer.classList.add("show");
-startSky();
-checkNight();
-}
-
-/* ليلة */
-function checkNight(){
-let h=new Date().getHours();
-if(h>=0 && h<7){
-document.body.classList.add("night");
-}
-}
-
-/* نجوم */
-function startSky(){
-const canvas=document.getElementById("sky");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let stars=[];
-
-for(let i=0;i<120;i++){
-stars.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2
-});
-}
-
-function draw(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-for(let s of stars){
-ctx.fillStyle="white";
-ctx.beginPath();
-ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-ctx.fill();
-
-s.y+=0.3;
-if(s.y>canvas.height)s.y=0;
-}
-
-requestAnimationFrame(draw);
-}
-
-draw();
-}
 
 /* مفاجأة */
 function openGift(){
 document.getElementById("popup").style.display="flex";
 }
 
-/* قلوب عشوائية */
+function closeGift(){
+document.getElementById("popup").style.display="none";
+}
+
+/* انتقال ناعم */
+function goMemory(){
+document.getElementById("memory").scrollIntoView({behavior:"smooth"});
+}
+
+function goHome(){
+document.getElementById("home").scrollIntoView({behavior:"smooth"});
+}
+
+/* قلوب عند الضغط */
 document.addEventListener("click",(e)=>{
-let el=document.createElement("div");
-el.className="particle";
-el.innerHTML=Math.random()>0.5?"❤️":"⭐";
-el.style.left=e.clientX+"px";
-el.style.top=e.clientY+"px";
-document.body.appendChild(el);
-setTimeout(()=>el.remove(),3000);
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.style.position="fixed";
+heart.style.left=e.clientX+"px";
+heart.style.top=e.clientY+"px";
+heart.style.fontSize="20px";
+heart.style.pointerEvents="none";
+heart.style.animation="up 2s linear forwards";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),2000);
 });
+
+/* أنيميشن القلوب */
+const style=document.createElement("style");
+style.innerHTML=`
+@keyframes up{
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-120px);opacity:0}
+}`;
+document.head.appendChild(style);
 
 </script>
 

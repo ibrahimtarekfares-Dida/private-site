@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بحبك ❤️</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -17,149 +18,221 @@
 body{
 margin:0;
 font-family:'Tajawal',sans-serif;
-background:linear-gradient(135deg,var(--primary),var(--secondary));
 min-height:100vh;
+overflow:hidden;
+color:#fff;
+transition:2s;
 display:flex;
 justify-content:center;
 align-items:center;
-color:#fff;
-overflow:hidden;
-transition:2s;
 padding:20px;
-position:relative;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
 }
 
-/* خلفية ليلية */
-body.night{
-background:linear-gradient(135deg,#0f1020,#1e2a5e,#3b2f72);
-}
-
-/* نجوم وقلوب */
-.bg-item{
+/* اسم ديدا المتحرك */
+.name-bg{
 position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:80px;
+opacity:.06;
+font-weight:bold;
+animation:floatName 6s infinite alternate;
 pointer-events:none;
-z-index:0;
-animation:floatUp linear forwards;
-opacity:.8;
 }
 
-@keyframes floatUp{
-0%{transform:translateY(0) scale(.7);opacity:0}
-20%{opacity:1}
-100%{transform:translateY(-120vh) scale(1.4);opacity:0}
+@keyframes floatName{
+0%{transform:translateY(0)}
+100%{transform:translateY(-20px)}
 }
 
-/* اسم ديدا */
-#didaGlow{
+/* شاشة التحميل */
+#loader{
 position:fixed;
-top:8%;
-left:50%;
-transform:translateX(-50%);
-font-size:55px;
-font-weight:bold;
-opacity:.08;
-z-index:0;
-text-shadow:
-0 0 5px #fff,
-0 0 10px #ffb6d5,
-0 0 20px #ff5ca8;
-animation:glow 3s infinite alternate;
-}
-
-@keyframes glow{
-from{opacity:.05;transform:translateX(-50%) scale(1)}
-to{opacity:.13;transform:translateX(-50%) scale(1.04)}
-}
-
-/* popup ترحيب */
-#welcome{
-position:fixed;
-top:30px;
-left:50%;
-transform:translateX(-50%);
-background:#fff;
-color:#ff4b7d;
-padding:14px 22px;
-border-radius:30px;
-font-weight:bold;
+inset:0;
+background:#ff758c;
 z-index:999;
-box-shadow:0 10px 30px rgba(0,0,0,.2);
-opacity:0;
-transition:1s;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:15px;
 }
 
-#welcome.show{
-opacity:1;
-top:50px;
+.bar{width:260px;height:18px;border:2px solid #fff;border-radius:20px;overflow:hidden}
+.bar-fill{height:100%;width:0%;background:#fff;transition:3s}
+
+/* البداية */
+#overlay{
+position:fixed;
+inset:0;
+background:#ff758c;
+display:none;
+justify-content:center;
+align-items:center;
+z-index:500;
 }
 
-/* الصندوق */
+#overlay button{
+padding:16px 30px;
+font-size:22px;
+border:none;
+border-radius:50px;
+background:#fff;
+color:#ff758c;
+font-weight:bold;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.1)}
+100%{transform:scale(1)}
+}
+
 .container{
 background:rgba(255,255,255,.15);
-padding:35px 20px;
-border-radius:30px;
-backdrop-filter:blur(15px);
-max-width:470px;
-width:92%;
+padding:30px 20px;
+border-radius:25px;
+backdrop-filter:blur(12px);
+max-width:500px;
+width:95%;
 text-align:center;
-border:1px solid rgba(255,255,255,.3);
-box-shadow:0 15px 35px rgba(0,0,0,.2);
+opacity:0;
+transform:translateY(20px);
+transition:1s;
 position:relative;
 z-index:2;
 }
 
-h1{margin:0 0 15px;font-size:28px}
+.container.show{opacity:1;transform:translateY(0)}
 
-.intro{
-line-height:1.8;
-font-size:18px;
-min-height:70px;
-}
-
-button.action{
-padding:12px 18px;
+button{
+cursor:pointer;
 border:none;
 border-radius:30px;
-font-size:18px;
-cursor:pointer;
-background:#fff;
-color:#ff4b7d;
+padding:10px 15px;
+margin:5px;
 font-weight:bold;
-margin:7px;
 }
 
-#countLove{
-margin-top:10px;
-font-weight:bold;
-font-size:20px;
+.action{
+background:#fff;
+color:#ff4b7d;
 }
+
+/* popup */
+#popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:700;
+}
+
+.popup-box{
+background:#fff;
+color:#ff4b7d;
+padding:20px;
+border-radius:20px;
+text-align:center;
+font-weight:bold;
+}
+
+/* زر رسالة اليوم */
+#dailyMsgBox{
+margin-top:10px;
+background:rgba(255,255,255,.2);
+padding:10px;
+border-radius:15px;
+}
+
+/* قلوب + نجوم */
+.particle{
+position:fixed;
+pointer-events:none;
+animation:fly 3s linear forwards;
+}
+
+@keyframes fly{
+0%{transform:translateY(0) scale(.6);opacity:1}
+100%{transform:translateY(-200px) scale(1.5);opacity:0}
+}
+
+/* Canvas نجوم */
+#sky{
+position:fixed;
+inset:0;
+z-index:0;
+}
+
+/* الليل */
+.night{
+background:linear-gradient(135deg,#0b0f2a,#1a1f3a) !important;
+}
+
 </style>
 </head>
 
 <body>
 
-<div id="didaGlow">ديدا</div>
-<div id="welcome">مرحبًا بأجمل ديدا في الدنيا ❤️</div>
+<canvas id="sky"></canvas>
 
-<div class="container">
+<div class="name-bg">ديدا</div>
 
-<h1 id="mainTitle">لأجمل ديدا ❤️</h1>
+<div id="loader">
+<div>جارٍ تحميل الحب ❤️</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<div id="percent">0%</div>
+</div>
 
-<p class="intro" id="typedText"></p>
+<div id="overlay">
+<button onclick="startEverything()">مرحبًا بأجمل ديدا في الدنيا ❤️</button>
+</div>
 
-<button class="action" onclick="dailyMsg()">رسالة اليوم 💌</button>
+<div class="container" id="mainContainer">
+
+<h2>لأجمل ديدا ❤️</h2>
+
+<p id="typed"></p>
+
+<button class="action" onclick="dailyMessage()">رسالة اليوم ❤️</button>
+<div id="dailyMsgBox"></div>
+
+<br>
 
 <button class="action" onclick="loveCount()">❤️ بحبك كام مرة؟</button>
-<div id="countLove">0</div>
+<div id="countLove"></div>
+
+<br>
+
+<button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
 
 </div>
 
-<script>
-const typedText=document.getElementById("typedText");
-const mainTitle=document.getElementById("mainTitle");
+<div id="popup" onclick="this.style.display='none'">
+<div class="popup-box">
+أنا محظوظ إنك في حياتي ❤️<br>
+الجاي أجمل ✨
+</div>
+</div>
 
-/* رسائل الدخول */
-const introMsgs=[
+<audio id="click"><source src="click.mp3"></audio>
+
+<script>
+
+let c=0;
+function loveCount(){
+c++;
+document.getElementById("countLove").innerText=c+" مرة ولسه 😍";
+}
+
+/* رسائل يومية */
+const messages=[
 "وجودك في حياتي نعمة كبيرة ❤️",
 "كل يوم معاكي بحبك أكتر 😍",
 "أجمل صدفة حصلتلي اني عرفتك 💖",
@@ -170,96 +243,93 @@ const introMsgs=[
 "أنتي أحلى حاجة حصلتلي ✨"
 ];
 
-/* رسالة اليوم */
-function dailyMsg(){
-const msg=introMsgs[Math.floor(Math.random()*introMsgs.length)];
-typedText.innerText=msg;
+function dailyMessage(){
+const day=new Date().getDate();
+const msg=messages[day % messages.length];
+document.getElementById("dailyMsgBox").innerText=msg;
 }
 
-/* أول تحميل */
-window.onload=()=>{
-dailyMsg();
-showWelcome();
-nightMode();
-setInterval(createBackground,600);
-setInterval(randomHeartRain,7000);
-};
+/* تحميل */
+let p=0;
+let load=setInterval(()=>{
+p++;
+percent.innerText=p+"%";
+barFill.style.width=p+"%";
+if(p>=100){
+clearInterval(load);
+loader.style.display="none";
+overlay.style.display="flex";
+}
+},30);
 
-/* popup */
-function showWelcome(){
-const box=document.getElementById("welcome");
-box.classList.add("show");
-
-setTimeout(()=>{
-box.classList.remove("show");
-},2500);
+/* تشغيل */
+function startEverything(){
+overlay.style.display="none";
+mainContainer.classList.add("show");
+startSky();
+checkNight();
 }
 
-/* موود ليلي من 12 ل 7 */
-function nightMode(){
-const h=new Date().getHours();
-
+/* ليلة */
+function checkNight(){
+let h=new Date().getHours();
 if(h>=0 && h<7){
 document.body.classList.add("night");
 }
 }
 
-/* نجوم وقلوب بالخلفية */
-function createBackground(){
+/* نجوم */
+function startSky(){
+const canvas=document.getElementById("sky");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-const item=document.createElement("div");
-item.className="bg-item";
+let stars=[];
 
-const starChance=Math.random();
-
-if(starChance<0.75){
-item.innerHTML="✦";   // نجوم أكثر
-item.style.fontSize=(10+Math.random()*12)+"px";
-}else{
-item.innerHTML=["❤️","💕","💖"][Math.floor(Math.random()*3)];
-item.style.fontSize=(14+Math.random()*10)+"px";
+for(let i=0;i<120;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+});
 }
 
-item.style.left=Math.random()*100+"vw";
-item.style.bottom="-30px";
-item.style.animationDuration=(6+Math.random()*5)+"s";
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-document.body.appendChild(item);
+for(let s of stars){
+ctx.fillStyle="white";
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
 
-setTimeout(()=>item.remove(),11000);
+s.y+=0.3;
+if(s.y>canvas.height)s.y=0;
 }
 
-/* مطر قلوب ناعم أحيانًا */
-function randomHeartRain(){
-
-for(let i=0;i<8;i++){
-
-setTimeout(()=>{
-
-const h=document.createElement("div");
-h.className="bg-item";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.bottom="-20px";
-h.style.fontSize=(16+Math.random()*12)+"px";
-h.style.animationDuration=(5+Math.random()*3)+"s";
-
-document.body.appendChild(h);
-
-setTimeout(()=>h.remove(),9000);
-
-},i*250);
-
-}
+requestAnimationFrame(draw);
 }
 
-/* عداد الحب */
-let c=0;
-
-function loveCount(){
-c++;
-document.getElementById("countLove").innerText=c+" مرة ولسه 😍";
+draw();
 }
+
+/* مفاجأة */
+function openGift(){
+document.getElementById("popup").style.display="flex";
+}
+
+/* قلوب عشوائية */
+document.addEventListener("click",(e)=>{
+let el=document.createElement("div");
+el.className="particle";
+el.innerHTML=Math.random()>0.5?"❤️":"⭐";
+el.style.left=e.clientX+"px";
+el.style.top=e.clientY+"px";
+document.body.appendChild(el);
+setTimeout(()=>el.remove(),3000);
+});
+
 </script>
 
 </body>

@@ -8,54 +8,50 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+:root{
+--primary:#ff758c;
+--secondary:#ff7eb3;
+}
+
+*{box-sizing:border-box}
+
 body{
 margin:0;
 font-family:'Tajawal',sans-serif;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
+background:linear-gradient(135deg,var(--primary),var(--secondary));
 color:#fff;
 overflow-x:hidden;
-scroll-behavior:smooth;
 }
 
-/* اسم الخلفية */
-.name-bg{
-position:fixed;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:80px;
-opacity:.05;
-font-weight:bold;
-pointer-events:none;
-}
-
-/* أقسام */
-section{
+/* ============ عام ============ */
+.page{
+display:none;
 min-height:100vh;
-display:flex;
 justify-content:center;
 align-items:center;
 padding:20px;
 }
 
-/* الكونتينر */
-.box{
+.page.active{
+display:flex;
+}
+
+/* ============ الصفحة الأولى ============ */
+.container{
 background:rgba(255,255,255,.15);
 padding:25px;
-border-radius:20px;
-backdrop-filter:blur(10px);
-max-width:520px;
+border-radius:25px;
+backdrop-filter:blur(12px);
+max-width:500px;
 width:95%;
 text-align:center;
 }
 
-/* أزرار */
 button{
-margin:8px;
-padding:12px 16px;
+padding:12px 18px;
 border:none;
-border-radius:30px;
+border-radius:25px;
+margin:8px;
 font-weight:bold;
 cursor:pointer;
 }
@@ -65,108 +61,135 @@ background:#fff;
 color:#ff4b7d;
 }
 
-/* قسم الذكريات */
+/* قلوب */
+.particle{
+position:fixed;
+pointer-events:none;
+animation:fly 3s linear forwards;
+}
+
+@keyframes fly{
+0%{transform:translateY(0) scale(.6);opacity:1}
+100%{transform:translateY(-200px) scale(1.5);opacity:0}
+}
+
+/* ============ الصفحة الثانية ============ */
+.meter{
+height:20px;
+background:rgba(255,255,255,.3);
+border-radius:20px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+width:0%;
+background:#fff;
+transition:2s;
+}
+
 .timeline{
-list-style:none;
-padding:0;
 text-align:right;
-border-right:2px solid rgba(255,255,255,.5);
+border-right:2px solid #fff;
+padding-right:15px;
 margin-top:20px;
 }
 
 .timeline li{
-padding-right:15px;
+list-style:none;
 margin-bottom:15px;
+position:relative;
+}
+
+.timeline li::before{
+content:"❤️";
+position:absolute;
+right:-18px;
+top:0;
 }
 
 .date{
-display:inline-block;
 background:rgba(0,0,0,.2);
 padding:3px 8px;
 border-radius:6px;
-font-size:13px;
+font-weight:bold;
+display:inline-block;
 margin-bottom:5px;
-}
-
-/* زر الرجوع */
-.back-btn{
-background:#fff;
-color:#ff4b7d;
 }
 </style>
 </head>
 
 <body>
 
-<div class="name-bg">ديدا</div>
+<!-- ===================== الصفحة 1 ===================== -->
+<div class="page active" id="page1">
 
-<!-- ========== القسم الأول ========== -->
-<section id="home">
-
-<div class="box">
+<div class="container">
 
 <h2>لأجمل ديدا ❤️</h2>
 
-<p>من يوم ما دخلتي حياتي والدنيا بقت أحلى 🫶</p>
+<p>كل حاجة هنا معمولة علشانك ✨</p>
+
+<button class="action" onclick="loveCount()">❤️ بحبك كام مرة؟</button>
+<div id="count"></div>
 
 <button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
 
-<button class="action" onclick="goMemory()">❤️ افتحي عالم تاني</button>
+<button class="action" onclick="goWorld()">افتحي عالم تاني ❤️</button>
 
 </div>
 
-</section>
+</div>
 
-<!-- popup -->
-<div id="popup" style="
-position:fixed;
-inset:0;
-display:none;
-justify-content:center;
-align-items:center;
-background:rgba(0,0,0,.6);
-">
+<!-- ===================== الصفحة 2 ===================== -->
+<div class="page" id="page2">
 
-<div style="
-background:#fff;
-color:#ff4b7d;
-padding:25px;
-border-radius:20px;
-text-align:center;
-font-weight:bold;
-max-width:300px;
-">
-أنا محظوظ إنك في حياتي ❤️<br>
-الجاي أجمل ✨
+<div class="container">
+
+<h2>العالم التاني ❤️</h2>
+
+<p>ده عالم الذكريات بينا ✨</p>
+
+<button class="action" onclick="showLove()">قد إيه بحبك؟ 😍</button>
+
+<div class="meter">
+<div class="fill" id="fill"></div>
+</div>
+
+<div id="loveText"></div>
+
+<ul class="timeline">
+<li><span class="date">24/11/2024</span><span class="event">😍اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك)</span></li>
+<li><span class="date">24/12/2024</span><span class="event">📩أول "رسالة" قلبت حياتي كلها (بداية كلامنا)</span></li>
+<li><span class="date">26/12/2024</span><span class="event">🤣أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً"😂</span></li>
+<li><span class="date">07/02/2026</span><span class="event">🏖️✨رحلة اسكندرية.. يومين من أجمل الذكريات اللي عشناها سوا❤️</span></li>
+<li><span class="date">14/02/2026</span><span class="event">🤝أول مقابلة مع بابا.. قراءة الفاتحة خطوة العمر🚶‍♂️🚶</span></li>
+</ul>
+
+<button class="action" onclick="back()">رجوع ❤️</button>
+
+</div>
+
+</div>
+
+<!-- Popup -->
+<div id="popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);justify-content:center;align-items:center;">
+<div style="background:#fff;color:#ff4b7d;padding:20px;border-radius:20px;text-align:center;font-weight:bold">
+أنا محظوظ إنك في حياتي ❤️<br>الجاي أجمل ✨
 <br><br>
 <button onclick="closeGift()">إغلاق</button>
 </div>
-
 </div>
-
-<!-- ========== القسم الثاني ========== -->
-<section id="memory">
-
-<div class="box">
-
-<h2>ذكرياتنا ❤️</h2>
-
-<p>كل لحظة معاكي ليها معنى ✨</p>
-
-<ul class="timeline">
-<li><span class="date">24/11/2024</span> أول مرة شوفتك ❤️</li>
-<li><span class="date">24/12/2024</span> بداية كلامنا 📩</li>
-<li><span class="date">07/02/2026</span> رحلة اسكندرية 🏖️</li>
-<li><span class="date">14/02/2026</span> لحظة العمر 🤝</li>
-</ul>
-
-<button class="back-btn" onclick="goHome()">🔙 رجوع</button>
-
-</div>
-
-</section>
 
 <script>
+
+/* ============ الصفحة الأولى ============ */
+let c=0;
+
+function loveCount(){
+c++;
+document.getElementById("count").innerText=c+" مرة ولسه 😍";
+}
 
 /* مفاجأة */
 function openGift(){
@@ -177,39 +200,34 @@ function closeGift(){
 document.getElementById("popup").style.display="none";
 }
 
-/* انتقال ناعم */
-function goMemory(){
-document.getElementById("memory").scrollIntoView({behavior:"smooth"});
+/* فتح العالم التاني */
+function goWorld(){
+document.getElementById("page1").classList.remove("active");
+document.getElementById("page2").classList.add("active");
 }
 
-function goHome(){
-document.getElementById("home").scrollIntoView({behavior:"smooth"});
+/* الرجوع */
+function back(){
+document.getElementById("page2").classList.remove("active");
+document.getElementById("page1").classList.add("active");
 }
 
-/* قلوب عند الضغط */
+/* ============ الصفحة الثانية ============ */
+function showLove(){
+document.getElementById("fill").style.width="100%";
+document.getElementById("loveText").innerText="1000000% حب ❤️😍";
+}
+
+/* ============ قلوب ============ */
 document.addEventListener("click",(e)=>{
-let heart=document.createElement("div");
-heart.innerHTML="❤️";
-heart.style.position="fixed";
-heart.style.left=e.clientX+"px";
-heart.style.top=e.clientY+"px";
-heart.style.fontSize="20px";
-heart.style.pointerEvents="none";
-heart.style.animation="up 2s linear forwards";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),2000);
+let el=document.createElement("div");
+el.className="particle";
+el.innerHTML=Math.random()>0.5?"❤️":"💖";
+el.style.left=e.clientX+"px";
+el.style.top=e.clientY+"px";
+document.body.appendChild(el);
+setTimeout(()=>el.remove(),3000);
 });
-
-/* أنيميشن القلوب */
-const style=document.createElement("style");
-style.innerHTML=`
-@keyframes up{
-0%{transform:translateY(0);opacity:1}
-100%{transform:translateY(-120px);opacity:0}
-}`;
-document.head.appendChild(style);
 
 </script>
 

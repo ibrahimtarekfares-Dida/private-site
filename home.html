@@ -23,7 +23,7 @@ color:#fff;
 overflow-x:hidden;
 }
 
-/* ============ عام ============ */
+/* الصفحات */
 .page{
 display:none;
 min-height:100vh;
@@ -32,26 +32,26 @@ align-items:center;
 padding:20px;
 }
 
-.page.active{
-display:flex;
-}
+.page.active{display:flex}
 
-/* ============ الصفحة الأولى ============ */
+/* صندوق */
 .container{
 background:rgba(255,255,255,.15);
 padding:25px;
 border-radius:25px;
 backdrop-filter:blur(12px);
-max-width:500px;
+max-width:520px;
 width:95%;
 text-align:center;
+position:relative;
 }
 
+/* أزرار */
 button{
 padding:12px 18px;
 border:none;
 border-radius:25px;
-margin:8px;
+margin:6px;
 font-weight:bold;
 cursor:pointer;
 }
@@ -61,11 +61,12 @@ background:#fff;
 color:#ff4b7d;
 }
 
-/* قلوب */
+/* ================= قلوب ================= */
 .particle{
 position:fixed;
 pointer-events:none;
 animation:fly 3s linear forwards;
+font-size:22px;
 }
 
 @keyframes fly{
@@ -73,7 +74,7 @@ animation:fly 3s linear forwards;
 100%{transform:translateY(-200px) scale(1.5);opacity:0}
 }
 
-/* ============ الصفحة الثانية ============ */
+/* ================= الصفحة الثانية ================= */
 .meter{
 height:20px;
 background:rgba(255,255,255,.3);
@@ -116,12 +117,50 @@ font-weight:bold;
 display:inline-block;
 margin-bottom:5px;
 }
+
+/* ================= عداد الوقت ================= */
+#timer{
+margin-top:10px;
+font-weight:bold;
+direction:ltr;
+}
+
+/* ================= العلامة المائية ================= */
+.watermark{
+position:fixed;
+bottom:8px;
+left:10px;
+font-size:11px;
+opacity:.6;
+transform:rotate(-90deg);
+transform-origin:left bottom;
+white-space:nowrap;
+}
+
+/* ================= popup ================= */
+#popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.popup-box{
+background:#fff;
+color:#ff4b7d;
+padding:20px;
+border-radius:20px;
+font-weight:bold;
+text-align:center;
+}
 </style>
 </head>
 
 <body>
 
-<!-- ===================== الصفحة 1 ===================== -->
+<!-- ============== الصفحة 1 ============== -->
 <div class="page active" id="page1">
 
 <div class="container">
@@ -138,17 +177,20 @@ margin-bottom:5px;
 <button class="action" onclick="goWorld()">افتحي عالم تاني ❤️</button>
 
 </div>
-
 </div>
 
-<!-- ===================== الصفحة 2 ===================== -->
+<!-- ============== الصفحة 2 ============== -->
 <div class="page" id="page2">
 
 <div class="container">
 
 <h2>العالم التاني ❤️</h2>
 
-<p>ده عالم الذكريات بينا ✨</p>
+<p>ذكرياتنا اللي ما بتتنساش ✨</p>
+
+<div id="timer">تحميل...</div>
+
+<br>
 
 <button class="action" onclick="showLove()">قد إيه بحبك؟ 😍</button>
 
@@ -159,70 +201,90 @@ margin-bottom:5px;
 <div id="loveText"></div>
 
 <ul class="timeline">
-<li><span class="date">24/11/2024</span><span class="event">😍اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك)</span></li>
-<li><span class="date">24/12/2024</span><span class="event">📩أول "رسالة" قلبت حياتي كلها (بداية كلامنا)</span></li>
-<li><span class="date">26/12/2024</span><span class="event">🤣أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً"😂</span></li>
-<li><span class="date">07/02/2026</span><span class="event">🏖️✨رحلة اسكندرية.. يومين من أجمل الذكريات اللي عشناها سوا❤️</span></li>
-<li><span class="date">14/02/2026</span><span class="event">🤝أول مقابلة مع بابا.. قراءة الفاتحة خطوة العمر🚶‍♂️🚶</span></li>
+<li><span class="date">24/11/2024</span> أول مرة شوفتك ❤️</li>
+<li><span class="date">24/12/2024</span> بداية الكلام 💬</li>
+<li><span class="date">07/02/2026</span> أجمل ذكريات 🏖️</li>
+<li><span class="date">14/02/2026</span> خطوة العمر 🤝</li>
 </ul>
 
 <button class="action" onclick="back()">رجوع ❤️</button>
 
 </div>
-
 </div>
 
-<!-- Popup -->
-<div id="popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);justify-content:center;align-items:center;">
-<div style="background:#fff;color:#ff4b7d;padding:20px;border-radius:20px;text-align:center;font-weight:bold">
-أنا محظوظ إنك في حياتي ❤️<br>الجاي أجمل ✨
-<br><br>
+<!-- popup -->
+<div id="popup">
+<div class="popup-box">
+أنا محظوظ إنك في حياتي ❤️<br>
+الجاي أجمل ✨<br><br>
 <button onclick="closeGift()">إغلاق</button>
 </div>
 </div>
 
+<!-- العلامة المائية -->
+<div class="watermark">صُنعت بكل الحب ❤️</div>
+
 <script>
 
-/* ============ الصفحة الأولى ============ */
+/* ====== حب عداد ====== */
 let c=0;
-
 function loveCount(){
 c++;
 document.getElementById("count").innerText=c+" مرة ولسه 😍";
 }
 
-/* مفاجأة */
+/* ====== مفاجأة ====== */
 function openGift(){
-document.getElementById("popup").style.display="flex";
+popup.style.display="flex";
 }
 
 function closeGift(){
-document.getElementById("popup").style.display="none";
+popup.style.display="none";
 }
 
-/* فتح العالم التاني */
+/* ====== تنقل الصفحات ====== */
 function goWorld(){
-document.getElementById("page1").classList.remove("active");
-document.getElementById("page2").classList.add("active");
+page1.classList.remove("active");
+page2.classList.add("active");
+startTimer();
 }
 
-/* الرجوع */
 function back(){
-document.getElementById("page2").classList.remove("active");
-document.getElementById("page1").classList.add("active");
+page2.classList.remove("active");
+page1.classList.add("active");
 }
 
-/* ============ الصفحة الثانية ============ */
+/* ====== حب ====== */
 function showLove(){
-document.getElementById("fill").style.width="100%";
-document.getElementById("loveText").innerText="1000000% حب ❤️😍";
+fill.style.width="100%";
+loveText.innerText="1000000% حب ❤️😍";
 }
 
-/* ============ قلوب ============ */
+/* ====== عداد الثواني (الكامل زي ما طلبت) ====== */
+const startDate = new Date("2024-11-24T00:00:00");
+
+function startTimer(){
+setInterval(updateTimer,1000);
+updateTimer();
+}
+
+function updateTimer(){
+const now=new Date();
+const diff=now-startDate;
+
+const d=Math.floor(diff/86400000);
+const h=Math.floor(diff/3600000)%24;
+const m=Math.floor(diff/60000)%60;
+const s=Math.floor(diff/1000)%60;
+
+timer.innerText = `${d} يوم، ${h} ساعة، ${m} دقيقة، ${s} ثانية ❤️`;
+}
+
+/* ====== قلوب ====== */
 document.addEventListener("click",(e)=>{
 let el=document.createElement("div");
 el.className="particle";
-el.innerHTML=Math.random()>0.5?"❤️":"💖";
+el.innerHTML=["❤️","💖","💕","💘"][Math.floor(Math.random()*4)];
 el.style.left=e.clientX+"px";
 el.style.top=e.clientY+"px";
 document.body.appendChild(el);

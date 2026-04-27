@@ -26,7 +26,6 @@ transition:background 3s linear;
 padding:20px;
 }
 
-/* شاشة البداية */
 #overlay{
 position:fixed;
 top:0;left:0;
@@ -52,7 +51,6 @@ font-weight:bold;
 box-shadow:0 5px 15px rgba(0,0,0,.2);
 }
 
-/* الكونتينر */
 .container{
 background:rgba(255,255,255,.15);
 padding:40px 20px;
@@ -74,10 +72,7 @@ opacity:1;
 transform:translateY(0);
 }
 
-h1{
-font-size:28px;
-margin-bottom:10px;
-}
+h1{font-size:28px;margin-bottom:10px;}
 
 .intro{
 font-size:17px;
@@ -86,7 +81,6 @@ margin-bottom:25px;
 min-height:95px;
 }
 
-/* العداد */
 .counter-box{
 background:rgba(255,255,255,.2);
 padding:15px;
@@ -101,7 +95,6 @@ direction:ltr;
 margin-top:5px;
 }
 
-/* تايم لاين */
 .timeline{
 text-align:right;
 list-style:none;
@@ -147,7 +140,6 @@ margin-top:20px;
 opacity:.95;
 }
 
-/* القلوب */
 .heart{
 position:fixed;
 bottom:-20px;
@@ -163,7 +155,6 @@ z-index:1;
 100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}
 }
 
-/* النجوم */
 .sparkle{
 position:fixed;
 font-size:18px;
@@ -179,21 +170,6 @@ z-index:1;
 100%{transform:translateY(-120px) scale(1.4);opacity:0;}
 }
 
-/* النص السحري */
-#magicText{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:36px;
-text-shadow:0 0 10px #ff7eb3,0 0 20px #ff758c,0 0 30px #fff;
-opacity:0;
-transition:1s;
-pointer-events:none;
-z-index:20;
-}
-
-/* القلب الكبير */
 .big-heart{
 font-size:42px;
 cursor:pointer;
@@ -205,7 +181,6 @@ transition:.3s;
 transform:scale(1.2);
 }
 
-/* الرسالة السرية */
 #secretMsg{
 display:none;
 background:rgba(255,255,255,.18);
@@ -221,7 +196,6 @@ from{opacity:0;transform:translateY(10px);}
 to{opacity:1;transform:translateY(0);}
 }
 
-/* زر الحب */
 .love-btn{
 margin-top:10px;
 padding:12px 22px;
@@ -234,7 +208,6 @@ color:#ff4b7d;
 font-weight:bold;
 }
 
-/* الميتر */
 #loveMeterBox{
 display:none;
 margin-top:15px;
@@ -286,28 +259,35 @@ font-weight:bold;
 <div id="secretMsg">أنا هفضل أحبك طول العمر ❤️</div>
 
 <ul class="timeline">
+
 <li>
 <span class="date">24/11/2024</span>
-<span class="event">😍 اليوم اللي عيني شافت فيه أحلى صدفة</span>
+<span class="event">😍 اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك).</span>
 </li>
 
 <li>
 <span class="date">24/12/2024</span>
-<span class="event">📩 أول رسالة غيرت حياتي كلها</span>
+<span class="event">📩 أول "رسالة" قلبت حياتي كلها (بداية كلامنا).</span>
+</li>
+
+<li>
+<span class="date">26/12/2024</span>
+<span class="event">🤣 أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً" 😂</span>
 </li>
 
 <li>
 <span class="date">07/02/2026</span>
-<span class="event">🏖️ رحلة اسكندرية من أجمل أيامنا</span>
+<span class="event">🏖️✨ رحلة اسكندرية.. يومين من أجمل الذكريات اللي عشناها سوا ❤️</span>
 </li>
 
 <li>
-<span class="date">14/02/2026</span>
-<span class="event">🤝 أول مقابلة مع بابا.. خطوة العمر</span>
+<span class="date">14/2/2026</span>
+<span class="event">🤝 أول مقابلة مع بابا.. خطوة العمر 🚶‍♂️🚶</span>
 </li>
+
 </ul>
 
-<button class="love-btn" onclick="showLoveMeter()">قد إيه بتحبيني؟ 😍</button>
+<button class="love-btn" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
 
 <div id="loveMeterBox">
 <div class="meter">
@@ -324,13 +304,10 @@ font-weight:bold;
 <source src="kazdoura.mp3" type="audio/mpeg">
 </audio>
 
-<div id="magicText">بحبك يا ديدا ❤️✨</div>
-
 <script>
 const audio = document.getElementById("myAudio");
 const startDate = new Date("2024-11-24T00:00:00");
 
-/* رسائل يومية */
 const messages = [
 "كل يوم بحبك أكتر من اللي قبله ❤️",
 "وجودك في حياتي أحلى صدفة حصلتلي 💖",
@@ -338,7 +315,6 @@ const messages = [
 "لو رجع بيا الزمن.. هاختارك ألف مرة ❤️"
 ];
 
-/* كتابة تدريجية */
 const introText =
 "من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني خالص.. 💖 عايز أقولك سر صغير.. أنا بحبك أكتر بكتير مما تتخيلي 😏✨";
 
@@ -349,7 +325,6 @@ setTimeout(()=>typeWriter(text,i+1),45);
 }
 }
 
-/* بداية الصفحة */
 function startEverything(){
 
 const overlay=document.getElementById("overlay");
@@ -372,11 +347,6 @@ updateTimer();
 document.querySelector(".footer-note").innerText =
 messages[new Date().getDate() % messages.length];
 
-setTimeout(()=>{
-document.getElementById("magicText").style.opacity="1";
-for(let i=0;i<50;i++) createHeart();
-},5000);
-
 setInterval(()=>{
 const hue=Math.floor(Math.random()*360);
 document.body.style.background =
@@ -386,7 +356,6 @@ document.body.style.background =
 birthdayCheck();
 }
 
-/* عداد */
 function updateTimer(){
 const now=new Date();
 const diff=now-startDate;
@@ -400,7 +369,6 @@ document.getElementById("timer").innerHTML =
 `${days} يوم، ${hours} ساعة، ${mins} دقيقة، ${secs} ثانية`;
 }
 
-/* قلوب */
 function createHeart(){
 const heart=document.createElement("div");
 heart.className="heart";
@@ -413,7 +381,6 @@ document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),6000);
 }
 
-/* نجوم */
 function createSparkle(){
 const star=document.createElement("div");
 star.className="sparkle";
@@ -425,13 +392,10 @@ document.body.appendChild(star);
 setTimeout(()=>star.remove(),3000);
 }
 
-/* رسالة سرية */
 function showSecret(){
-const msg=document.getElementById("secretMsg");
-msg.style.display="block";
+document.getElementById("secretMsg").style.display="block";
 }
 
-/* ميتر الحب */
 function showLoveMeter(){
 document.getElementById("loveMeterBox").style.display="block";
 
@@ -447,7 +411,6 @@ document.getElementById("loveText").innerHTML="1000000% 😍";
 },3200);
 }
 
-/* عيد الميلاد */
 function birthdayCheck(){
 const today=new Date();
 const day=today.getDate();

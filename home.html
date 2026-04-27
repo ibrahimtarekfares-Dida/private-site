@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بحبك ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Amiri:ital@1&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -18,12 +18,12 @@
 body{
 margin:0;
 font-family:'Tajawal',sans-serif;
-background:linear-gradient(135deg,var(--primary),var(--secondary));
 color:#fff;
 overflow-x:hidden;
+transition:2s;
 }
 
-/* الصفحات */
+/* ================== الصفحات ================== */
 .page{
 display:none;
 min-height:100vh;
@@ -32,28 +32,97 @@ align-items:center;
 padding:20px;
 }
 
-.page.active{display:flex}
+.page.active{
+display:flex;
+}
 
-/* صندوق */
+/* ================== PAGE 1 (الأساسي) ================== */
+
+#sky{
+position:fixed;
+inset:0;
+z-index:0;
+}
+
+.name-bg{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:80px;
+opacity:.06;
+font-weight:bold;
+animation:floatName 6s infinite alternate;
+pointer-events:none;
+}
+
+@keyframes floatName{
+0%{transform:translateY(0)}
+100%{transform:translateY(-20px)}
+}
+
+#loader{
+position:fixed;
+inset:0;
+background:#ff758c;
+z-index:999;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:15px;
+}
+
+.bar{width:260px;height:18px;border:2px solid #fff;border-radius:20px;overflow:hidden}
+.bar-fill{height:100%;width:0%;background:#fff;transition:3s}
+
+#overlay{
+position:fixed;
+inset:0;
+background:#ff758c;
+display:none;
+justify-content:center;
+align-items:center;
+z-index:500;
+}
+
+#overlay button{
+padding:16px 30px;
+font-size:22px;
+border:none;
+border-radius:50px;
+background:#fff;
+color:#ff758c;
+font-weight:bold;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.1)}
+100%{transform:scale(1)}
+}
+
 .container{
 background:rgba(255,255,255,.15);
-padding:25px;
+padding:30px 20px;
 border-radius:25px;
 backdrop-filter:blur(12px);
-max-width:520px;
+max-width:500px;
 width:95%;
 text-align:center;
 position:relative;
+z-index:2;
 }
 
-/* أزرار */
 button{
-padding:12px 18px;
-border:none;
-border-radius:25px;
-margin:6px;
-font-weight:bold;
 cursor:pointer;
+border:none;
+border-radius:30px;
+padding:10px 15px;
+margin:5px;
+font-weight:bold;
 }
 
 .action{
@@ -61,12 +130,11 @@ background:#fff;
 color:#ff4b7d;
 }
 
-/* ================= قلوب ================= */
+/* particles */
 .particle{
 position:fixed;
 pointer-events:none;
 animation:fly 3s linear forwards;
-font-size:22px;
 }
 
 @keyframes fly{
@@ -74,11 +142,85 @@ font-size:22px;
 100%{transform:translateY(-200px) scale(1.5);opacity:0}
 }
 
-/* ================= الصفحة الثانية ================= */
+.night{
+background:linear-gradient(135deg,#0b0f2a,#1a1f3a) !important;
+}
+
+/* ================== PAGE 2 ================== */
+
+.counter-box{
+background:rgba(255,255,255,.2);
+padding:15px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+#timer{
+direction:ltr;
+font-weight:bold;
+margin-top:5px;
+}
+
+.timeline{
+text-align:right;
+list-style:none;
+padding:0;
+border-right:2px solid rgba(255,255,255,.5);
+}
+
+.timeline li{
+margin-bottom:20px;
+padding-right:15px;
+position:relative;
+}
+
+.timeline li::before{
+content:"❤️";
+position:absolute;
+right:-12px;
+top:0;
+}
+
+.date{
+background:rgba(0,0,0,.1);
+padding:2px 8px;
+border-radius:6px;
+font-weight:bold;
+display:inline-block;
+margin-bottom:5px;
+}
+
+.big-heart{
+font-size:42px;
+cursor:pointer;
+margin:10px 0;
+}
+
+#secretMsg{
+display:none;
+background:rgba(255,255,255,.18);
+padding:12px;
+border-radius:15px;
+margin-bottom:15px;
+}
+
+.love-btn{
+background:#fff;
+color:#ff4b7d;
+padding:12px 20px;
+border-radius:30px;
+font-weight:bold;
+}
+
+#loveMeterBox{
+display:none;
+margin-top:10px;
+}
+
 .meter{
 height:20px;
-background:rgba(255,255,255,.3);
-border-radius:20px;
+background:rgba(255,255,255,.2);
+border-radius:30px;
 overflow:hidden;
 }
 
@@ -86,58 +228,10 @@ overflow:hidden;
 height:100%;
 width:0%;
 background:#fff;
-transition:2s;
+transition:3s;
 }
 
-.timeline{
-text-align:right;
-border-right:2px solid #fff;
-padding-right:15px;
-margin-top:20px;
-}
-
-.timeline li{
-list-style:none;
-margin-bottom:15px;
-position:relative;
-}
-
-.timeline li::before{
-content:"❤️";
-position:absolute;
-right:-18px;
-top:0;
-}
-
-.date{
-background:rgba(0,0,0,.2);
-padding:3px 8px;
-border-radius:6px;
-font-weight:bold;
-display:inline-block;
-margin-bottom:5px;
-}
-
-/* ================= عداد الوقت ================= */
-#timer{
-margin-top:10px;
-font-weight:bold;
-direction:ltr;
-}
-
-/* ================= العلامة المائية ================= */
-.watermark{
-position:fixed;
-bottom:8px;
-left:10px;
-font-size:11px;
-opacity:.6;
-transform:rotate(-90deg);
-transform-origin:left bottom;
-white-space:nowrap;
-}
-
-/* ================= popup ================= */
+/* popup */
 #popup{
 position:fixed;
 inset:0;
@@ -145,6 +239,7 @@ background:rgba(0,0,0,.6);
 display:none;
 justify-content:center;
 align-items:center;
+z-index:700;
 }
 
 .popup-box{
@@ -152,53 +247,90 @@ background:#fff;
 color:#ff4b7d;
 padding:20px;
 border-radius:20px;
-font-weight:bold;
 text-align:center;
+font-weight:bold;
+}
+
+/* watermark */
+.watermark{
+position:fixed;
+bottom:8px;
+left:10px;
+font-size:11px;
+opacity:.6;
+transform:rotate(-90deg);
 }
 </style>
 </head>
 
 <body>
 
-<!-- ============== الصفحة 1 ============== -->
+<!-- ================== LOADER PAGE 1 ================== -->
+<div id="loader">
+<div>جارٍ تحميل الحب ❤️</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<div id="percent">0%</div>
+</div>
+
+<div id="overlay">
+<button onclick="startEverything()">مرحبًا بأجمل ديدا ❤️</button>
+</div>
+
+<!-- ================== PAGE 1 ================== -->
 <div class="page active" id="page1">
+
+<canvas id="sky"></canvas>
+<div class="name-bg">ديدا</div>
 
 <div class="container">
 
 <h2>لأجمل ديدا ❤️</h2>
 
-<p>كل حاجة هنا معمولة علشانك ✨</p>
+<p id="typed"></p>
+
+<button class="action" onclick="dailyMessage()">رسالة اليوم ❤️</button>
+<div id="dailyMsgBox"></div>
+
+<br>
 
 <button class="action" onclick="loveCount()">❤️ بحبك كام مرة؟</button>
-<div id="count"></div>
+<div id="countLove"></div>
+
+<br>
 
 <button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
+
+<br>
 
 <button class="action" onclick="goWorld()">افتحي عالم تاني ❤️</button>
 
 </div>
 </div>
 
-<!-- ============== الصفحة 2 ============== -->
+<!-- popup -->
+<div id="popup" onclick="this.style.display='none'">
+<div class="popup-box">
+أنا محظوظ إنك في حياتي ❤️<br>
+الجاي أجمل ✨
+</div>
+</div>
+
+<!-- ================== PAGE 2 ================== -->
 <div class="page" id="page2">
 
 <div class="container">
 
-<h2>العالم التاني ❤️</h2>
+<h1>لأجمل ديدا 🫶❤️</h1>
 
-<p>ذكرياتنا اللي ما بتتنساش ✨</p>
+<p id="typedText"></p>
 
-<div id="timer">تحميل...</div>
-
-<br>
-
-<button class="action" onclick="showLove()">قد إيه بحبك؟ 😍</button>
-
-<div class="meter">
-<div class="fill" id="fill"></div>
+<div class="counter-box">
+<span>إحنا مع بعض بقالنا:</span>
+<div id="timer">...</div>
 </div>
 
-<div id="loveText"></div>
+<div class="big-heart" onclick="showSecret()">❤️</div>
+<div id="secretMsg">أنا هفضل أحبك طول العمر ❤️</div>
 
 <ul class="timeline">
 <li><span class="date">24/11/2024</span> أول مرة شوفتك ❤️</li>
@@ -207,65 +339,114 @@ text-align:center;
 <li><span class="date">14/02/2026</span> خطوة العمر 🤝</li>
 </ul>
 
-<button class="action" onclick="back()">رجوع ❤️</button>
+<button class="love-btn" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
+
+<div id="loveMeterBox">
+<div class="meter"><div class="fill" id="fillBar"></div></div>
+<div id="loveText"></div>
+</div>
 
 </div>
+
 </div>
 
-<!-- popup -->
-<div id="popup">
-<div class="popup-box">
-أنا محظوظ إنك في حياتي ❤️<br>
-الجاي أجمل ✨<br><br>
-<button onclick="closeGift()">إغلاق</button>
-</div>
-</div>
-
-<!-- العلامة المائية -->
 <div class="watermark">صُنعت بكل الحب ❤️</div>
 
 <script>
 
-/* ====== حب عداد ====== */
-let c=0;
-function loveCount(){
-c++;
-document.getElementById("count").innerText=c+" مرة ولسه 😍";
-}
-
-/* ====== مفاجأة ====== */
-function openGift(){
-popup.style.display="flex";
-}
-
-function closeGift(){
-popup.style.display="none";
-}
-
-/* ====== تنقل الصفحات ====== */
+/* ================= PAGE SWITCH ================= */
 function goWorld(){
 page1.classList.remove("active");
 page2.classList.add("active");
 startTimer();
 }
 
-function back(){
-page2.classList.remove("active");
+/* ================= PAGE 1 FUNCTIONS ================= */
+let c=0;
+function loveCount(){
+c++;
+countLove.innerText=c+" مرة ولسه 😍";
+}
+
+function openGift(){
+popup.style.display="flex";
+}
+
+const messages=[
+"وجودك في حياتي نعمة ❤️",
+"كل يوم بحبك أكتر 😍",
+"إنتي أجمل حاجة 💖",
+"وجودك راحة 🫶"
+];
+
+function dailyMessage(){
+dailyMsgBox.innerText =
+messages[new Date().getDate()%messages.length];
+}
+
+/* loader */
+let p=0;
+let load=setInterval(()=>{
+p++;
+percent.innerText=p+"%";
+barFill.style.width=p+"%";
+if(p>=100){
+clearInterval(load);
+loader.style.display="none";
+overlay.style.display="flex";
+}
+},30);
+
+/* start */
+function startEverything(){
+overlay.style.display="none";
 page1.classList.add("active");
+startSky();
 }
 
-/* ====== حب ====== */
-function showLove(){
-fill.style.width="100%";
-loveText.innerText="1000000% حب ❤️😍";
+/* sky */
+function startSky(){
+const canvas=document.getElementById("sky");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+for(let i=0;i<120;i++){
+stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
 }
 
-/* ====== عداد الثواني (الكامل زي ما طلبت) ====== */
-const startDate = new Date("2024-11-24T00:00:00");
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+for(let s of stars){
+ctx.fillStyle="white";
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+s.y+=0.3;
+if(s.y>canvas.height)s.y=0;
+}
+requestAnimationFrame(draw);
+}
+draw();
+}
+
+/* particles */
+document.addEventListener("click",(e)=>{
+let el=document.createElement("div");
+el.className="particle";
+el.innerHTML="❤️";
+el.style.left=e.clientX+"px";
+el.style.top=e.clientY+"px";
+document.body.appendChild(el);
+setTimeout(()=>el.remove(),3000);
+});
+
+/* ================= PAGE 2 ================= */
+const startDate=new Date("2024-11-24");
 
 function startTimer(){
 setInterval(updateTimer,1000);
-updateTimer();
 }
 
 function updateTimer(){
@@ -277,19 +458,17 @@ const h=Math.floor(diff/3600000)%24;
 const m=Math.floor(diff/60000)%60;
 const s=Math.floor(diff/1000)%60;
 
-timer.innerText = `${d} يوم، ${h} ساعة، ${m} دقيقة، ${s} ثانية ❤️`;
+timer.innerText=`${d} يوم ${h} ساعة ${m} دقيقة ${s} ثانية ❤️`;
 }
 
-/* ====== قلوب ====== */
-document.addEventListener("click",(e)=>{
-let el=document.createElement("div");
-el.className="particle";
-el.innerHTML=["❤️","💖","💕","💘"][Math.floor(Math.random()*4)];
-el.style.left=e.clientX+"px";
-el.style.top=e.clientY+"px";
-document.body.appendChild(el);
-setTimeout(()=>el.remove(),3000);
-});
+function showSecret(){
+secretMsg.style.display="block";
+}
+
+function showLoveMeter(){
+fillBar.style.width="100%";
+loveText.innerText="1000000% ❤️😍";
+}
 
 </script>
 

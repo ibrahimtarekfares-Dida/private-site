@@ -4,103 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بحبك ❤️</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
---primary:#ff758c;
---secondary:#ff7eb3;
-}
-
-*{box-sizing:border-box}
-
 body{
 margin:0;
 font-family:'Tajawal',sans-serif;
-background:linear-gradient(135deg,var(--primary),var(--secondary));
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
 min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 color:#fff;
-overflow-x:hidden;
-transition:3s;
+overflow:hidden;
+transition:2s;
 padding:20px;
 }
 
-/* شاشة التحميل */
-#loader{
+canvas{
 position:fixed;
 inset:0;
-background:#ff758c;
-z-index:999;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-font-size:22px;
-gap:15px;
-}
-
-.bar{
-width:260px;
-height:18px;
-border:2px solid #fff;
-border-radius:20px;
-overflow:hidden;
-}
-
-.bar-fill{
-height:100%;
-width:0%;
-background:#fff;
-transition:3s linear;
-}
-
-/* البداية */
-#overlay{
-position:fixed;
-inset:0;
-background:#ff758c;
-display:none;
-justify-content:center;
-align-items:center;
-z-index:500;
-}
-
-#overlay button{
-padding:16px 30px;
-font-size:22px;
-border:none;
-border-radius:50px;
-background:#fff;
-color:#ff758c;
-font-weight:bold;
-cursor:pointer;
-animation:pulse 1.5s infinite;
-box-shadow:0 0 25px rgba(255,255,255,.4);
-}
-
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.08)}
-100%{transform:scale(1)}
+z-index:0;
 }
 
 .container{
+position:relative;
+z-index:2;
 background:rgba(255,255,255,.15);
-padding:35px 20px;
-border-radius:30px;
-backdrop-filter:blur(15px);
-max-width:470px;
-width:92%;
+padding:30px;
+border-radius:25px;
+backdrop-filter:blur(10px);
+max-width:500px;
+width:95%;
 text-align:center;
-border:1px solid rgba(255,255,255,.3);
-box-shadow:0 15px 35px rgba(0,0,0,.2);
 opacity:0;
 transform:translateY(20px);
 transition:1s;
-position:relative;
 }
 
 .container.show{
@@ -108,347 +48,165 @@ opacity:1;
 transform:translateY(0);
 }
 
-h1{margin:0 0 15px;font-size:28px}
-
-.intro{line-height:1.8;font-size:17px;min-height:95px}
-
-.counter-box{
-background:rgba(255,255,255,.2);
-padding:15px;
-border-radius:20px;
-margin:20px 0;
-}
-
-#timer{
-margin-top:8px;
-direction:ltr;
-font-weight:bold;
-font-size:18px;
-}
-
-.big-heart{
-font-size:42px;
+button{
 cursor:pointer;
-margin:10px 0;
-}
-
-#secretMsg{
-display:none;
-background:rgba(255,255,255,.18);
-padding:12px;
-border-radius:15px;
-margin-bottom:15px;
-}
-
-.timeline{
-list-style:none;
-padding:0;
-text-align:right;
-border-right:2px solid rgba(255,255,255,.5);
-margin:20px 0;
-}
-
-.timeline li{
-padding-right:15px;
-margin-bottom:18px;
-position:relative;
-}
-
-.timeline li::before{
-content:"❤️";
-position:absolute;
-right:-12px;
-top:0;
-font-size:12px;
-}
-
-.date{
-display:inline-block;
-padding:2px 8px;
-border-radius:6px;
-background:rgba(0,0,0,.12);
-font-size:14px;
-font-weight:bold;
-margin-bottom:5px;
-}
-
-.event{display:block;line-height:1.5}
-
-button.action{
-padding:12px 20px;
 border:none;
-border-radius:30px;
-font-size:18px;
-cursor:pointer;
+border-radius:25px;
+padding:10px 15px;
+font-weight:bold;
+margin:5px;
+}
+
+.action{
 background:#fff;
 color:#ff4b7d;
-font-weight:bold;
-margin:8px 4px;
 }
 
-#loveMeterBox{display:none;margin-top:10px}
-
-.meter{
-height:20px;
-background:rgba(255,255,255,.2);
-border-radius:30px;
-overflow:hidden;
-}
-
-.fill{
-height:100%;
-width:0%;
-background:#fff;
-transition:3s;
-}
-
-.footer-note{margin-top:18px;font-style:italic}
-
-/* Popup */
 #popup{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.55);
 display:none;
 justify-content:center;
 align-items:center;
-z-index:700;
-padding:20px;
+background:rgba(0,0,0,.6);
+z-index:999;
 }
 
 .popup-box{
 background:#fff;
 color:#ff4b7d;
-padding:25px;
-border-radius:25px;
-max-width:320px;
+padding:20px;
+border-radius:20px;
 text-align:center;
-font-size:22px;
 font-weight:bold;
 }
 
-/* قلوب */
-.heart{
+.particle{
 position:fixed;
 pointer-events:none;
-font-size:24px;
-animation:fly 2.5s linear forwards;
-z-index:50;
+animation:fly 3s linear forwards;
+font-size:20px;
 }
 
 @keyframes fly{
-0%{transform:translate(0,0) scale(.7);opacity:1}
-100%{transform:translate(0,-130px) scale(1.6);opacity:0}
-}
-
-/* علامة مائية */
-.watermark{
-position:absolute;
-bottom:10px;
-left:12px;
-font-size:11px;
-opacity:.65;
-transform:rotate(-90deg);
-transform-origin:left bottom;
-white-space:nowrap;
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-200px);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<!-- تحميل -->
-<div id="loader">
-<div>جارٍ تحميل كمية الحب... ❤️</div>
-<div class="bar"><div class="bar-fill" id="barFill"></div></div>
-<div id="percent">0%</div>
-</div>
+<canvas id="sky"></canvas>
 
-<!-- البداية -->
-<div id="overlay">
-<button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
-</div>
-
-<!-- المحتوى -->
 <div class="container" id="mainContainer">
 
-<h1 id="mainTitle">لأجمل ديدا في الدنيا 🫶❤️</h1>
+<h2>لأجمل ديدا ❤️</h2>
 
-<p class="intro" id="typedText"></p>
+<p id="typed"></p>
 
-<div class="counter-box">
-<span>إحنا مع بعض بقالنا:</span>
-<div id="timer">تحميل...</div>
-</div>
+<button class="action" onclick="dailyMessage()">رسالة اليوم ❤️</button>
+<div id="dailyBox"></div>
 
-<div class="big-heart" onclick="showSecret()">❤️</div>
-<div id="secretMsg">أنا هفضل أحبك طول العمر ❤️</div>
+<br>
 
-<ul class="timeline">
-<li><span class="date">24/11/2024</span><span class="event">😍اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك)</span></li>
-<li><span class="date">24/12/2024</span><span class="event">📩أول "رسالة" قلبت حياتي كلها (بداية كلامنا)</span></li>
-<li><span class="date">26/12/2024</span><span class="event">🤣أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً"😂</span></li>
-<li><span class="date">07/02/2026</span><span class="event">🏖️✨رحلة اسكندرية.. يومين من أجمل الذكريات اللي عشناها سوا❤️</span></li>
-<li><span class="date">14/02/2026</span><span class="event">🤝أول مقابلة مع بابا.. قراءة الفاتحة خطوة العمر🚶‍♂️🚶</span></li>
-</ul>
+<button class="action" onclick="loveCount()">قد إيه بحبك؟ 😍</button>
+<div id="loveBox"></div>
 
-<button class="action" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
+<br>
+
 <button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
 
-<div id="loveMeterBox">
-<div class="meter"><div class="fill" id="fillBar"></div></div>
-<div id="loveText" style="margin-top:10px;font-weight:bold"></div>
 </div>
 
-<p class="footer-note" id="timeMsg"></p>
-
-<div class="watermark">صُنعت بكل الحب بواسطة قلبوا ❤️</div>
-
-</div>
-
-<!-- popup -->
-<div id="popup" onclick="closeGift()">
+<div id="popup" onclick="this.style.display='none'">
 <div class="popup-box">
-أنا محظوظ إنك في حياتي ❤️<br><br>
-الجاي أجمل طول ما انتي معايا ✨
+أنا محظوظ إنك في حياتي ❤️<br>
+الجاي أجمل ✨
 </div>
 </div>
-
-<!-- أصوات -->
-<audio id="myAudio" loop>
-<source src="kazdoura.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="clickSound">
-<source src="click.mp3" type="audio/mpeg">
-</audio>
 
 <script>
-const audio=document.getElementById("myAudio");
-const clickSound=document.getElementById("clickSound");
-const startDate=new Date("2024-11-24T00:00:00");
 
-/* تحميل */
-let p=0;
-const load=setInterval(()=>{
-p++;
-document.getElementById("percent").innerText=p+"%";
-document.getElementById("barFill").style.width=p+"%";
-if(p>=100){
-clearInterval(load);
-setTimeout(()=>{
-document.getElementById("loader").style.display="none";
-document.getElementById("overlay").style.display="flex";
-},400);
-}
-},30);
+/* ====== تشغيل الصفحة ====== */
+window.onload=()=>{
+document.getElementById("mainContainer").classList.add("show");
+startSky();
+};
 
-/* كتابة */
-const introText="من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني.. أنا بحبك أكتر بكتير مما تتخيلي ❤️";
-
-function typeWriter(text,i=0){
-if(i<text.length){
-typedText.innerHTML+=text.charAt(i);
-setTimeout(()=>typeWriter(text,i+1),40);
-}
+/* ====== عداد حب ====== */
+let love=0;
+function loveCount(){
+love++;
+document.getElementById("loveBox").innerText=`بحبك ${love} مرة ولسه 😍`;
 }
 
-/* بدء */
-function startEverything(){
-playClick();
+/* ====== رسائل يومية ====== */
+const messages=[
+"وجودك في حياتي نعمة كبيرة ❤️",
+"كل يوم معاكي بحبك أكتر 😍",
+"أجمل صدفة حصلتلي اني عرفتك 💖",
+"إنتي راحتي وسندي وكل دنيتي 🫶",
+"أنتي أحلى حاجة حصلتلي ✨"
+];
 
-overlay.style.display="none";
-mainContainer.classList.add("show");
-
-audio.volume=.4;
-audio.play().catch(()=>{});
-
-typeWriter(introText);
-updateTimer();
-setInterval(updateTimer,1000);
-setInterval(changeBg,4000);
-
-timeMessage();
+function dailyMessage(){
+let d=new Date().getDate();
+document.getElementById("dailyBox").innerText=
+messages[d % messages.length];
 }
 
-/* رسائل حسب الوقت */
-function timeMessage(){
-const h=new Date().getHours();
-if(h>=5 && h<12){
-timeMsg.innerText="صباح الخير يا أجمل بداية ❤️";
-}else if(h>=12 && h<18){
-timeMsg.innerText="نص اليوم عدى ولسه بحبك أكتر 😍";
-}else{
-timeMsg.innerText="تصبحي على حب أكتر من امبارح ❤️";
-}
-}
+/* ====== نجوم ====== */
+function startSky(){
+const c=document.getElementById("sky");
+const ctx=c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
 
-/* عداد */
-function updateTimer(){
-const now=new Date();
-const diff=now-startDate;
-
-const d=Math.floor(diff/86400000);
-const h=Math.floor(diff/3600000)%24;
-const m=Math.floor(diff/60000)%60;
-const s=Math.floor(diff/1000)%60;
-
-timer.innerText=${d} يوم، ${h} ساعة، ${m} دقيقة، ${s} ثانية;
-}
-
-/* خلفية */
-function changeBg(){
-const hue=Math.floor(Math.random()*360);
-document.body.style.background=
-linear-gradient(135deg,hsl(${hue},80%,70%),hsl(${(hue+60)%360},80%,70%));
-}
-
-/* صوت ضغط */
-function playClick(){
-clickSound.currentTime=0;
-clickSound.play().catch(()=>{});
-}
-
-/* رسالة سرية */
-function showSecret(){
-playClick();
-secretMsg.style.display="block";
-}
-
-/* ميتر */
-function showLoveMeter(){
-playClick();
-loveMeterBox.style.display="block";
-fillBar.style.width="0%";
-
-setTimeout(()=>fillBar.style.width="100%",100);
-setTimeout(()=>loveText.innerText="1000000% 😍",3200);
-}
-
-/* مفاجأة */
-function openGift(){
-playClick();
-popup.style.display="flex";
-}
-
-function closeGift(){
-playClick();
-popup.style.display="none";
-}
-
-/* قلوب من مكان الضغط */
-document.addEventListener("click",function(e){
-
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML=["❤️","💖","💕","💘"][Math.floor(Math.random()*4)];
-heart.style.left=e.clientX+"px";
-heart.style.top=e.clientY+"px";
-
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),2500);
-
+let stars=[];
+for(let i=0;i<120;i++){
+stars.push({
+x:Math.random()*c.width,
+y:Math.random()*c.height,
+r:Math.random()*2
 });
+}
+
+function draw(){
+ctx.clearRect(0,0,c.width,c.height);
+
+for(let s of stars){
+ctx.fillStyle="white";
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+
+s.y+=0.3;
+if(s.y>c.height)s.y=0;
+}
+
+requestAnimationFrame(draw);
+}
+draw();
+}
+
+/* ====== مفاجأة ====== */
+function openGift(){
+document.getElementById("popup").style.display="flex";
+}
+
+/* ====== قلوب + نجوم عند الضغط ====== */
+document.addEventListener("click",(e)=>{
+let el=document.createElement("div");
+el.className="particle";
+el.innerHTML=Math.random()>0.5?"❤️":"⭐";
+el.style.left=e.clientX+"px";
+el.style.top=e.clientY+"px";
+document.body.appendChild(el);
+
+setTimeout(()=>el.remove(),3000);
+});
+
 </script>
 
 </body>

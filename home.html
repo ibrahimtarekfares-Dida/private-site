@@ -15,103 +15,37 @@
 
 *{box-sizing:border-box}
 
-html,body{
+body{
 margin:0;
-padding:0;
-height:100%;
 font-family:'Tajawal',sans-serif;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
-overflow:hidden;
+min-height:100vh;
+overflow-x:hidden;
 color:#fff;
-}
-
-/* الخلفية الثابتة */
-body::before{
-content:"";
-position:fixed;
-inset:0;
 background:linear-gradient(135deg,#ff758c,#ff7eb3);
-z-index:-3;
+transition:3s;
 }
 
-/* ================= CANVAS ================= */
-#sky{
-position:fixed;
-inset:0;
-z-index:-2;
-}
-
-/* ================= PAGES ================= */
+/* ================= PAGES SYSTEM ================= */
 .page{
-position:absolute;
-inset:0;
-display:flex;
+display:none;
+min-height:100vh;
 justify-content:center;
 align-items:center;
 padding:20px;
-opacity:0;
-transform:scale(0.95) rotateY(20deg);
-transition:1s ease;
-pointer-events:none;
 }
 
 .page.active{
-opacity:1;
-transform:scale(1) rotateY(0deg);
-pointer-events:auto;
+display:flex;
 }
 
-/* ================= 3D TRANSITION OVERLAY ================= */
-#portal{
-position:fixed;
-inset:0;
-background:radial-gradient(circle,#fff 0%,#ff4b7d 40%,#000 100%);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:9999;
-animation:none;
-}
-
-.portal-circle{
-width:120px;
-height:120px;
-border-radius:50%;
-border:4px solid #fff;
-animation:spin 1s linear infinite, expand 1s ease forwards;
-box-shadow:0 0 40px #fff;
-}
-
-@keyframes spin{
-from{transform:rotate(0)}
-to{transform:rotate(360deg)}
-}
-
-@keyframes expand{
-0%{transform:scale(0.2)}
-100%{transform:scale(20)}
-}
-
-/* ================= PAGE BOX ================= */
-.container{
-background:rgba(255,255,255,.15);
-padding:25px;
-border-radius:25px;
-backdrop-filter:blur(12px);
-max-width:520px;
-width:95%;
-text-align:center;
-z-index:2;
-}
-
-/* buttons */
+/* ================= COMMON ================= */
 button{
-padding:10px 15px;
+cursor:pointer;
 border:none;
-border-radius:25px;
+border-radius:30px;
+padding:10px 15px;
 margin:5px;
 font-weight:bold;
-cursor:pointer;
 }
 
 .action{
@@ -119,64 +53,20 @@ background:#fff;
 color:#ff4b7d;
 }
 
-/* particles */
-.particle{
-position:fixed;
-pointer-events:none;
-animation:fly 3s linear forwards;
-z-index:10;
+/* ================= PAGE 1 (بسيطة تشغيل) ================= */
+.simple-box{
+background:rgba(255,255,255,.15);
+padding:30px 20px;
+border-radius:25px;
+backdrop-filter:blur(12px);
+text-align:center;
+max-width:420px;
+width:95%;
 }
 
-@keyframes fly{
-0%{transform:translateY(0) scale(.6);opacity:1}
-100%{transform:translateY(-200px) scale(1.5);opacity:0}
-}
+/* ================= PAGE 2 (العالم التاني الكامل) ================= */
 
-/* timeline */
-.timeline{
-text-align:right;
-border-right:2px solid rgba(255,255,255,.5);
-padding-right:15px;
-}
-
-.timeline li{
-list-style:none;
-margin-bottom:15px;
-position:relative;
-}
-
-.timeline li::before{
-content:"❤️";
-position:absolute;
-right:-18px;
-}
-
-/* meter */
-.meter{
-height:20px;
-background:rgba(255,255,255,.2);
-border-radius:20px;
-overflow:hidden;
-}
-
-.fill{
-height:100%;
-width:0%;
-background:#fff;
-transition:2s;
-}
-
-/* watermark */
-.watermark{
-position:fixed;
-bottom:10px;
-left:10px;
-font-size:11px;
-opacity:.6;
-transform:rotate(-90deg);
-}
-
-/* loader glitch fix */
+/* شاشة التحميل */
 #loader{
 position:fixed;
 inset:0;
@@ -186,9 +76,26 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+font-size:22px;
+gap:15px;
 }
 
-/* overlay */
+.bar{
+width:260px;
+height:18px;
+border:2px solid #fff;
+border-radius:20px;
+overflow:hidden;
+}
+
+.bar-fill{
+height:100%;
+width:0%;
+background:#fff;
+transition:3s linear;
+}
+
+/* البداية */
 #overlay{
 position:fixed;
 inset:0;
@@ -196,123 +103,278 @@ background:#ff758c;
 display:none;
 justify-content:center;
 align-items:center;
-z-index:998;
+z-index:500;
 }
 
+#overlay button{
+padding:16px 30px;
+font-size:22px;
+border-radius:50px;
+background:#fff;
+color:#ff758c;
+font-weight:bold;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.08)}
+100%{transform:scale(1)}
+}
+
+.container{
+background:rgba(255,255,255,.15);
+padding:35px 20px;
+border-radius:30px;
+backdrop-filter:blur(15px);
+max-width:470px;
+width:92%;
+text-align:center;
+border:1px solid rgba(255,255,255,.3);
+box-shadow:0 15px 35px rgba(0,0,0,.2);
+opacity:0;
+transform:translateY(20px);
+transition:1s;
+}
+
+.container.show{
+opacity:1;
+transform:translateY(0);
+}
+
+h1{margin:0 0 15px;font-size:28px}
+
+.intro{line-height:1.8;font-size:17px;min-height:95px}
+
+.counter-box{
+background:rgba(255,255,255,.2);
+padding:15px;
+border-radius:20px;
+margin:20px 0;
+}
+
+#timer{
+margin-top:8px;
+direction:ltr;
+font-weight:bold;
+font-size:18px;
+}
+
+/* timeline */
+.timeline{
+list-style:none;
+padding:0;
+text-align:right;
+border-right:2px solid rgba(255,255,255,.5);
+margin:20px 0;
+}
+
+.timeline li{
+padding-right:15px;
+margin-bottom:18px;
+position:relative;
+}
+
+.timeline li::before{
+content:"❤️";
+position:absolute;
+right:-12px;
+top:0;
+font-size:12px;
+}
+
+.date{
+display:inline-block;
+padding:2px 8px;
+border-radius:6px;
+background:rgba(0,0,0,.12);
+font-size:14px;
+font-weight:bold;
+margin-bottom:5px;
+}
+
+/* heart */
+.heart{
+position:fixed;
+pointer-events:none;
+font-size:24px;
+animation:fly 2.5s linear forwards;
+}
+
+@keyframes fly{
+0%{transform:translate(0,0) scale(.7);opacity:1}
+100%{transform:translate(0,-130px) scale(1.6);opacity:0}
+}
+
+/* meter */
+.meter{
+height:20px;
+background:rgba(255,255,255,.2);
+border-radius:30px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+width:0%;
+background:#fff;
+transition:3s;
+}
+
+/* popup */
+#popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:700;
+}
+
+.popup-box{
+background:#fff;
+color:#ff4b7d;
+padding:25px;
+border-radius:25px;
+font-weight:bold;
+text-align:center;
+}
+
+/* watermark */
+.watermark{
+position:fixed;
+bottom:10px;
+left:10px;
+font-size:11px;
+opacity:.65;
+transform:rotate(-90deg);
+}
 </style>
 </head>
 
 <body>
 
-<canvas id="sky"></canvas>
-
-<!-- ================= PORTAL ================= -->
-<div id="portal">
-<div class="portal-circle"></div>
-</div>
-
 <!-- ================= PAGE 1 ================= -->
 <div class="page active" id="page1">
 
-<div class="container">
+<div class="simple-box">
 
 <h2>لأجمل ديدا ❤️</h2>
 
-<button class="action" onclick="loveCount()">حب ❤️</button>
-<div id="count"></div>
+<p>اضغطي علشان تدخلي العالم التاني 🌌</p>
 
-<button class="action" onclick="openGift()">مفاجأة 🎁</button>
-
-<button class="action" onclick="goWorld()">افتحي العالم التاني 🌌</button>
+<button class="action" onclick="goWorld()">العالم التاني ❤️</button>
 
 </div>
 </div>
 
-<!-- ================= PAGE 2 ================= -->
+<!-- ================= PAGE 2 (FULL YOUR SCRIPT) ================= -->
 <div class="page" id="page2">
 
-<div class="container">
-
-<h2>العالم التاني ❤️</h2>
-
-<p id="timer"></p>
-
-<button class="action" onclick="showLove()">قد إيه بحبك 😍</button>
-
-<div class="meter">
-<div class="fill" id="fill"></div>
+<!-- loader -->
+<div id="loader">
+<div>جارٍ تحميل كمية الحب... ❤️</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<div id="percent">0%</div>
 </div>
 
-<div id="loveText"></div>
+<!-- overlay -->
+<div id="overlay">
+<button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
+</div>
+
+<div class="container" id="mainContainer">
+
+<h1 id="mainTitle">لأجمل ديدا في الدنيا 🫶❤️</h1>
+
+<p class="intro" id="typedText"></p>
+
+<div class="counter-box">
+<span>إحنا مع بعض بقالنا:</span>
+<div id="timer">تحميل...</div>
+</div>
+
+<div class="big-heart" onclick="showSecret()">❤️</div>
+<div id="secretMsg">أنا هفضل أحبك طول العمر ❤️</div>
 
 <ul class="timeline">
-<li>أول مرة شوفتك ❤️</li>
-<li>بداية الكلام 💬</li>
-<li>أجمل ذكريات 🏖️</li>
-<li>خطوة العمر 🤝</li>
+<li><span class="date">24/11/2024</span> أول مرة شفتك ❤️</li>
+<li><span class="date">24/12/2024</span> بداية كلامنا 💬</li>
+<li><span class="date">26/12/2024</span> أول هزار 😂</li>
+<li><span class="date">07/02/2026</span> اسكندرية 🏖️</li>
+<li><span class="date">14/02/2026</span> خطوة العمر 🤝</li>
 </ul>
 
-<button class="action" onclick="back()">رجوع ⬅️</button>
+<button class="action" onclick="showLoveMeter()">قد إيه بحبك 😍</button>
+<button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
 
+<div id="loveMeterBox">
+<div class="meter"><div class="fill" id="fillBar"></div></div>
+<div id="loveText"></div>
+</div>
+
+</div>
+
+<div id="popup" onclick="closeGift()">
+<div class="popup-box">
+أنا محظوظ إنك في حياتي ❤️<br>
+الجاي أجمل ✨
 </div>
 </div>
 
-<!-- watermark -->
-<div class="watermark">Made with Love ❤️</div>
+<div class="watermark">صُنعت بكل الحب ❤️</div>
+
+</div>
 
 <script>
 
-/* ============ FIX BACKGROUND STABILITY ============ */
-document.body.style.background="linear-gradient(135deg,#ff758c,#ff7eb3)";
-
-/* ============ PAGE SWITCH WITH 3D PORTAL ============ */
+/* ================= NAVIGATION ================= */
 function goWorld(){
-showPortal(()=>{
 page1.classList.remove("active");
 page2.classList.add("active");
-startTimer();
-});
+loaderStart();
 }
 
-function back(){
-showPortal(()=>{
-page2.classList.remove("active");
-page1.classList.add("active");
-});
-}
+/* ================= PAGE 2 FULL LOGIC ================= */
 
-/* ============ PORTAL ANIMATION ============ */
-function showPortal(callback){
-const portal=document.getElementById("portal");
-portal.style.display="flex";
-
-setTimeout(()=>{
-callback();
-},700);
-
-setTimeout(()=>{
-portal.style.display="none";
-},1200);
-}
-
-/* ============ LOVE COUNTER ============ */
-let c=0;
-function loveCount(){
-c++;
-count.innerText=c+" ❤️";
-}
-
-/* ============ LOVE METER ============ */
-function showLove(){
-fill.style.width="100%";
-loveText.innerText="1000000% ❤️😍";
-}
-
-/* ============ TIMER ============ */
 const startDate=new Date("2024-11-24");
 
-function startTimer(){
-setInterval(()=>{
+/* loader */
+let p=0;
+function loaderStart(){
+let load=setInterval(()=>{
+p++;
+percent.innerText=p+"%";
+barFill.style.width=p+"%";
+if(p>=100){
+clearInterval(load);
+loader.style.display="none";
+overlay.style.display="flex";
+}
+},30);
+}
+
+/* start */
+function startEverything(){
+overlay.style.display="none";
+mainContainer.classList.add("show");
+
+typeWriter("من يوم ما دخلتي حياتي وأنا مش زي الأول ❤️");
+updateTimer();
+setInterval(updateTimer,1000);
+}
+
+/* typing */
+function typeWriter(text,i=0){
+if(i<text.length){
+typedText.innerHTML+=text.charAt(i);
+setTimeout(()=>typeWriter(text,i+1),40);
+}
+}
+
+/* timer */
+function updateTimer(){
 const now=new Date();
 const diff=now-startDate;
 
@@ -322,47 +384,38 @@ const m=Math.floor(diff/60000)%60;
 const s=Math.floor(diff/1000)%60;
 
 timer.innerText=`${d} يوم ${h} ساعة ${m} دقيقة ${s} ثانية ❤️`;
-},1000);
 }
 
-/* ============ PORTAL PARTICLES FIXED ============ */
+/* secret */
+function showSecret(){
+secretMsg.style.display="block";
+}
+
+/* love meter */
+function showLoveMeter(){
+fillBar.style.width="100%";
+loveText.innerText="1000000% ❤️😍";
+}
+
+/* gift */
+function openGift(){
+popup.style.display="flex";
+}
+
+function closeGift(){
+popup.style.display="none";
+}
+
+/* hearts */
 document.addEventListener("click",(e)=>{
 let el=document.createElement("div");
-el.className="particle";
+el.className="heart";
 el.innerHTML="❤️";
 el.style.left=e.clientX+"px";
 el.style.top=e.clientY+"px";
 document.body.appendChild(el);
-setTimeout(()=>el.remove(),3000);
+setTimeout(()=>el.remove(),2500);
 });
-
-/* ============ SIMPLE SKY FIX ============ */
-const canvas=document.getElementById("sky");
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let stars=[];
-for(let i=0;i<100;i++){
-stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
-}
-
-function draw(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="white";
-
-stars.forEach(s=>{
-ctx.beginPath();
-ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-ctx.fill();
-s.y+=0.3;
-if(s.y>canvas.height)s.y=0;
-});
-
-requestAnimationFrame(draw);
-}
-draw();
 
 </script>
 

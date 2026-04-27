@@ -4,67 +4,94 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بحبك ❤️</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Amiri:ital@1&display=swap" rel="stylesheet">
 
 <style>
 :root{
---primary-color:#ff758c;
---secondary-color:#ff7eb3;
+--primary:#ff758c;
+--secondary:#ff7eb3;
+--glass:rgba(255,255,255,.16);
+--glass-border:rgba(255,255,255,.28);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-margin:0;
 font-family:'Tajawal',sans-serif;
-background:linear-gradient(135deg,var(--primary-color),var(--secondary-color));
+background:linear-gradient(135deg,var(--primary),var(--secondary));
 min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-color:#fff;
+padding:15px;
 overflow-x:hidden;
+color:#fff;
 transition:background 3s linear;
-padding:20px;
+position:relative;
 }
 
+/* خلفية */
+.bg-layer{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:0;
+overflow:hidden;
+}
+
+/* شاشة البداية */
 #overlay{
 position:fixed;
-top:0;left:0;
-width:100%;height:100%;
+inset:0;
 background:#ff758c;
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:100;
+z-index:999;
 transition:.8s;
+padding:20px;
 }
 
 #overlay button{
-padding:15px 30px;
-font-size:22px;
 border:none;
+padding:16px 28px;
 border-radius:50px;
-background:#fff;
-color:#ff758c;
+font-size:clamp(18px,4vw,24px);
+font-family:'Tajawal',sans-serif;
+font-weight:700;
 cursor:pointer;
-font-family:'Tajawal';
-font-weight:bold;
-box-shadow:0 5px 15px rgba(0,0,0,.2);
+background:#fff;
+color:#ff4b7d;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+animation:pulse 1.6s infinite;
 }
 
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.06)}
+100%{transform:scale(1)}
+}
+
+/* الصندوق */
 .container{
-background:rgba(255,255,255,.15);
-padding:40px 20px;
-border-radius:30px;
-backdrop-filter:blur(15px);
-box-shadow:0 15px 35px rgba(0,0,0,.2);
-max-width:460px;
-width:90%;
-text-align:center;
-border:1px solid rgba(255,255,255,.3);
-z-index:10;
+position:relative;
+z-index:5;
+width:100%;
+max-width:520px;
+background:var(--glass);
+backdrop-filter:blur(14px);
+border:1px solid var(--glass-border);
+border-radius:28px;
+padding:22px;
+box-shadow:0 15px 40px rgba(0,0,0,.18);
 opacity:0;
-transform:translateY(20px);
-transition:1s ease-out;
+transform:translateY(25px);
+transition:1s ease;
 }
 
 .container.show{
@@ -72,41 +99,82 @@ opacity:1;
 transform:translateY(0);
 }
 
-h1{font-size:28px;margin-bottom:10px;}
+h1{
+font-size:clamp(24px,5vw,32px);
+text-align:center;
+margin-bottom:14px;
+}
 
 .intro{
-font-size:17px;
-line-height:1.8;
-margin-bottom:25px;
+text-align:center;
+line-height:1.9;
+font-size:clamp(16px,3.8vw,18px);
 min-height:95px;
+margin-bottom:18px;
 }
 
 .counter-box{
-background:rgba(255,255,255,.2);
-padding:15px;
-border-radius:20px;
-margin-bottom:25px;
+background:rgba(255,255,255,.14);
+padding:14px;
+border-radius:18px;
+text-align:center;
+margin-bottom:18px;
+}
+
+.counter-box span{
+display:block;
+margin-bottom:6px;
+font-size:16px;
 }
 
 #timer{
-font-size:19px;
-font-weight:bold;
 direction:ltr;
-margin-top:5px;
+font-weight:700;
+font-size:clamp(16px,4vw,20px);
 }
 
+.big-heart{
+font-size:44px;
+text-align:center;
+cursor:pointer;
+margin:10px 0 14px;
+transition:.3s;
+user-select:none;
+}
+
+.big-heart:hover{
+transform:scale(1.15);
+}
+
+#secretMsg{
+display:none;
+text-align:center;
+background:rgba(255,255,255,.14);
+padding:12px;
+border-radius:14px;
+margin-bottom:16px;
+animation:fadeIn .5s;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* timeline */
 .timeline{
-text-align:right;
 list-style:none;
 padding:0;
-border-right:2px solid rgba(255,255,255,.5);
-margin-bottom:20px;
+margin:12px 0 18px;
+border-right:2px solid rgba(255,255,255,.45);
 }
 
 .timeline li{
-margin-bottom:20px;
-padding-right:15px;
 position:relative;
+padding-right:14px;
+margin-bottom:16px;
+line-height:1.7;
+font-size:15px;
 }
 
 .timeline li::before{
@@ -118,126 +186,171 @@ font-size:12px;
 }
 
 .date{
-font-weight:bold;
-font-size:14px;
 display:inline-block;
+background:rgba(0,0,0,.12);
 padding:2px 8px;
-border-radius:6px;
-background:rgba(0,0,0,.1);
-margin-bottom:5px;
+border-radius:8px;
+font-size:13px;
+font-weight:700;
+margin-bottom:4px;
 }
 
 .event{
 display:block;
-font-size:16px;
-line-height:1.5;
 }
 
-.footer-note{
-font-size:15px;
-font-style:italic;
-margin-top:20px;
-opacity:.95;
+.buttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:14px;
 }
 
-.heart{
-position:fixed;
-bottom:-20px;
-font-size:24px;
-animation:floatUp 6s linear infinite;
-opacity:.8;
-pointer-events:none;
-z-index:1;
-}
-
-@keyframes floatUp{
-0%{transform:translateY(0) rotate(0deg);opacity:1;}
-100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}
-}
-
-.sparkle{
-position:fixed;
-font-size:18px;
-pointer-events:none;
-animation:spark 3s linear forwards;
-opacity:.8;
-z-index:1;
-}
-
-@keyframes spark{
-0%{transform:translateY(0) scale(.5);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(-120px) scale(1.4);opacity:0;}
-}
-
-.big-heart{
-font-size:42px;
-cursor:pointer;
-margin:15px 0;
-transition:.3s;
-}
-
-.big-heart:hover{
-transform:scale(1.2);
-}
-
-#secretMsg{
-display:none;
-background:rgba(255,255,255,.18);
-padding:12px;
-border-radius:15px;
-margin-bottom:20px;
-font-size:18px;
-animation:fadeIn .6s;
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(10px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-.love-btn{
-margin-top:10px;
-padding:12px 22px;
+button.action{
 border:none;
-border-radius:30px;
-font-size:18px;
+padding:12px;
+border-radius:24px;
+font-family:'Tajawal',sans-serif;
+font-size:16px;
+font-weight:700;
 cursor:pointer;
 background:#fff;
 color:#ff4b7d;
-font-weight:bold;
+transition:.2s;
+}
+
+button.action:hover{
+transform:translateY(-2px);
+}
+
+#dailyMsgBox{
+display:none;
+margin-bottom:14px;
+background:rgba(255,255,255,.14);
+padding:12px;
+border-radius:14px;
+text-align:center;
+line-height:1.7;
 }
 
 #loveMeterBox{
 display:none;
-margin-top:15px;
+margin-top:10px;
 }
 
 .meter{
-width:100%;
 height:22px;
-background:rgba(255,255,255,.2);
+background:rgba(255,255,255,.18);
 border-radius:30px;
 overflow:hidden;
-margin-top:10px;
 }
 
 .fill{
 height:100%;
 width:0%;
 background:#fff;
-transition:3s;
+transition:2.8s;
 }
 
 #loveText{
-margin-top:10px;
-font-size:18px;
-font-weight:bold;
+text-align:center;
+margin-top:8px;
+font-weight:700;
+}
+
+.footer-note{
+margin-top:18px;
+text-align:center;
+font-style:italic;
+line-height:1.7;
+}
+
+.watermark{
+margin-top:18px;
+text-align:center;
+font-size:12px;
+opacity:.75;
+}
+
+/* popup */
+#popup{
+position:fixed;
+inset:0;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.55);
+z-index:9999;
+padding:20px;
+}
+
+.popup-box{
+background:#fff;
+color:#ff4b7d;
+padding:22px;
+border-radius:24px;
+max-width:330px;
+width:100%;
+text-align:center;
+font-size:22px;
+font-weight:700;
+line-height:1.7;
+}
+
+/* particles */
+.float-item{
+position:fixed;
+pointer-events:none;
+z-index:1;
+animation:rise linear forwards;
+}
+
+@keyframes rise{
+0%{
+transform:translateY(0) scale(.8) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(-140vh) scale(1.5) rotate(360deg);
+opacity:0;
+}
+}
+
+/* موبايل */
+@media (max-width:600px){
+
+.container{
+padding:18px;
+border-radius:22px;
+}
+
+.timeline li{
+font-size:14px;
+}
+
+.buttons{
+grid-template-columns:1fr;
+}
+
+.popup-box{
+font-size:20px;
+}
+
+}
+
+/* لابتوب كبير */
+@media (min-width:900px){
+.container{
+max-width:580px;
+padding:28px;
+}
 }
 </style>
 </head>
 
 <body>
+
+<div class="bg-layer" id="bgLayer"></div>
 
 <div id="overlay">
 <button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
@@ -259,35 +372,21 @@ font-weight:bold;
 <div id="secretMsg">أنا هفضل أحبك طول العمر ❤️</div>
 
 <ul class="timeline">
-
-<li>
-<span class="date">24/11/2024</span>
-<span class="event">😍 اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك).</span>
-</li>
-
-<li>
-<span class="date">24/12/2024</span>
-<span class="event">📩 أول "رسالة" قلبت حياتي كلها (بداية كلامنا).</span>
-</li>
-
-<li>
-<span class="date">26/12/2024</span>
-<span class="event">🤣 أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً" 😂</span>
-</li>
-
-<li>
-<span class="date">07/02/2026</span>
-<span class="event">🏖️✨ رحلة اسكندرية.. يومين من أجمل الذكريات اللي عشناها سوا ❤️</span>
-</li>
-
-<li>
-<span class="date">14/2/2026</span>
-<span class="event">🤝 أول مقابلة مع بابا.. قراءة الفاتحة خطوة العمر 🚶‍♂️🚶</span>
-</li>
-
+<li><span class="date">24/11/2024</span><span class="event">😍 اليوم اللي عيني شافت فيه أحلى صدفة</span></li>
+<li><span class="date">24/12/2024</span><span class="event">📩 أول رسالة قلبت حياتي كلها</span></li>
+<li><span class="date">26/12/2024</span><span class="event">🤣 أول هزار بينا وبداية الضحك</span></li>
+<li><span class="date">07/02/2026</span><span class="event">🏖️ رحلة اسكندرية.. من أجمل الذكريات</span></li>
+<li><span class="date">14/02/2026</span><span class="event">🤝 أول مقابلة مع بابا.. خطوة العمر</span></li>
 </ul>
 
-<button class="love-btn" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
+<div class="buttons">
+<button class="action" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
+<button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
+<button class="action" onclick="dailyMessage()">رسالة اليوم ❤️</button>
+<button class="action" onclick="changeNow()">لون جديد ✨</button>
+</div>
+
+<div id="dailyMsgBox"></div>
 
 <div id="loveMeterBox">
 <div class="meter">
@@ -296,8 +395,17 @@ font-weight:bold;
 <div id="loveText"></div>
 </div>
 
-<p class="footer-note"></p>
+<p class="footer-note" id="timeMsg"></p>
 
+<div class="watermark">صُنعت بكل الحب بواسطة قلبوا ❤️</div>
+
+</div>
+
+<div id="popup" onclick="closeGift()">
+<div class="popup-box">
+أنا محظوظ إنك في حياتي ❤️<br>
+الجاي أجمل طول ما انتي معايا ✨
+</div>
 </div>
 
 <audio id="myAudio" loop>
@@ -305,126 +413,180 @@ font-weight:bold;
 </audio>
 
 <script>
+/* عناصر */
+const overlay = document.getElementById("overlay");
+const mainContainer = document.getElementById("mainContainer");
+const typedText = document.getElementById("typedText");
+const timer = document.getElementById("timer");
+const popup = document.getElementById("popup");
 const audio = document.getElementById("myAudio");
+const timeMsg = document.getElementById("timeMsg");
+
 const startDate = new Date("2024-11-24T00:00:00");
 
+const introText =
+"من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني.. أنا بحبك أكتر بكتير مما تتخيلي ❤️";
+
 const messages = [
-"كل يوم بحبك أكتر من اللي قبله ❤️",
-"وجودك في حياتي أحلى صدفة حصلتلي 💖",
-"إنتي أجمل حاجة حصلتلي بجد ✨",
-"لو رجع بيا الزمن.. هاختارك ألف مرة ❤️"
+"وجودك في حياتي نعمة كبيرة ❤️",
+"كل يوم معاكي بحبك أكتر 😍",
+"أجمل صدفة حصلتلي إني عرفتك 💖",
+"إنتي راحتي وسندي وكل دنيتي 🫶",
+"أنا فخور بيكي ❤️",
+"وجودك بيهون الدنيا ✨"
 ];
 
-const introText =
-"من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني خالص.. 💖 عايز أقولك سر صغير.. أنا بحبك أكتر بكتير مما تتخيلي 😏✨";
-
-function typeWriter(text,i=0){
-if(i<text.length){
-document.getElementById("typedText").innerHTML += text.charAt(i);
-setTimeout(()=>typeWriter(text,i+1),45);
-}
-}
-
+/* بداية */
 function startEverything(){
 
-const overlay=document.getElementById("overlay");
 overlay.style.opacity="0";
 
 setTimeout(()=>{
 overlay.style.display="none";
-document.getElementById("mainContainer").classList.add("show");
-typeWriter(introText);
-},800);
+mainContainer.classList.add("show");
+},700);
 
-audio.volume=.4;
+audio.volume=.35;
 audio.play().catch(()=>{});
 
-setInterval(createHeart,400);
-setInterval(createSparkle,700);
-setInterval(updateTimer,1000);
+typeWriter();
 updateTimer();
+timeMessage();
 
-document.querySelector(".footer-note").innerText =
-messages[new Date().getDate() % messages.length];
-
-setInterval(()=>{
-const hue=Math.floor(Math.random()*360);
-document.body.style.background =
-linear-gradient(135deg,hsl(${hue},80%,70%),hsl(${(hue+60)%360},80%,70%));
-},4000);
-
-birthdayCheck();
+setInterval(updateTimer,1000);
+setInterval(autoBg,5000);
+setInterval(createHeart,650);
+setInterval(createSpark,1200);
 }
 
+/* كتابة */
+function typeWriter(i=0){
+if(i < introText.length){
+typedText.innerHTML += introText.charAt(i);
+setTimeout(()=>typeWriter(i+1),38);
+}
+}
+
+/* عداد */
 function updateTimer(){
-const now=new Date();
-const diff=now-startDate;
+const now = new Date();
+const diff = now - startDate;
 
-const days=Math.floor(diff/(1000*60*60*24));
-const hours=Math.floor((diff/(1000*60*60))%24);
-const mins=Math.floor((diff/(1000*60))%60);
-const secs=Math.floor((diff/1000)%60);
+const d = Math.floor(diff / 86400000);
+const h = Math.floor(diff / 3600000) % 24;
+const m = Math.floor(diff / 60000) % 60;
+const s = Math.floor(diff / 1000) % 60;
 
-document.getElementById("timer").innerHTML =
-${days} يوم، ${hours} ساعة، ${mins} دقيقة، ${secs} ثانية;
+timer.innerText = `${d} يوم، ${h} ساعة، ${m} دقيقة، ${s} ثانية`;
 }
 
-function createHeart(){
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML=["💖","💝","❤️","💕"][Math.floor(Math.random()*4)];
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(16+Math.random()*24)+"px";
-heart.style.animationDuration=(4+Math.random()*4)+"s";
+/* رسالة حسب الوقت */
+function timeMessage(){
+const h = new Date().getHours();
 
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),6000);
+if(h >= 5 && h < 12){
+timeMsg.innerText = "صباح الخير يا أجمل بداية ❤️";
+}else if(h < 18){
+timeMsg.innerText = "نص اليوم عدى ولسه بحبك أكتر 😍";
+}else{
+timeMsg.innerText = "تصبحي على حب أكتر من امبارح ❤️";
+}
 }
 
-function createSparkle(){
-const star=document.createElement("div");
-star.className="sparkle";
-star.innerHTML=["✨","⭐","🌟"][Math.floor(Math.random()*3)];
-star.style.left=Math.random()*100+"vw";
-star.style.top=(50+Math.random()*80)+"vh";
-
-document.body.appendChild(star);
-setTimeout(()=>star.remove(),3000);
+/* تغيير لون */
+function autoBg(){
+const hue = Math.floor(Math.random()*360);
+document.body.style.background =
+`linear-gradient(135deg,hsl(${hue},80%,70%),hsl(${(hue+55)%360},80%,70%))`;
 }
 
+function changeNow(){
+autoBg();
+}
+
+/* رسالة سرية */
 function showSecret(){
 document.getElementById("secretMsg").style.display="block";
+burst(14);
 }
 
+/* ميتر الحب */
 function showLoveMeter(){
-document.getElementById("loveMeterBox").style.display="block";
+const box = document.getElementById("loveMeterBox");
+const fill = document.getElementById("fillBar");
+const txt = document.getElementById("loveText");
 
-const fill=document.getElementById("fillBar");
+box.style.display="block";
 fill.style.width="0%";
+txt.innerText="";
 
 setTimeout(()=>{
 fill.style.width="100%";
 },100);
 
 setTimeout(()=>{
-document.getElementById("loveText").innerHTML="1000000% 😍";
-},3200);
+txt.innerText="1000000% 😍";
+},2800);
 }
 
-function birthdayCheck(){
-const today=new Date();
-const day=today.getDate();
-const month=today.getMonth()+1;
+/* رسالة اليوم */
+function dailyMessage(){
+const box = document.getElementById("dailyMsgBox");
+const day = new Date().getDate();
 
-if(day===20 && month===6){
-document.getElementById("mainTitle").innerHTML =
-"🎂 كل سنة وإنتي أجمل سنيني يا ديدا ❤️";
-for(let i=0;i<80;i++) createHeart();
+box.style.display="block";
+box.innerText = messages[day % messages.length];
+}
+
+/* popup */
+function openGift(){
+popup.style.display="flex";
+burst(20);
+}
+
+function closeGift(){
+popup.style.display="none";
+}
+
+/* عناصر طائرة */
+function createHeart(){
+const item = document.createElement("div");
+item.className="float-item";
+item.innerHTML = ["❤️","💖","💕","💘"][Math.floor(Math.random()*4)];
+item.style.left = Math.random()*100 + "vw";
+item.style.bottom = "-20px";
+item.style.fontSize = (16 + Math.random()*20) + "px";
+item.style.animationDuration = (5 + Math.random()*4) + "s";
+
+document.body.appendChild(item);
+setTimeout(()=>item.remove(),9000);
+}
+
+function createSpark(){
+const item = document.createElement("div");
+item.className="float-item";
+item.innerHTML = ["✨","⭐","🌟"][Math.floor(Math.random()*3)];
+item.style.left = Math.random()*100 + "vw";
+item.style.bottom = "-20px";
+item.style.fontSize = (14 + Math.random()*12) + "px";
+item.style.animationDuration = (4 + Math.random()*3) + "s";
+
+document.body.appendChild(item);
+setTimeout(()=>item.remove(),7000);
+}
+
+/* انفجار لطيف */
+function burst(num=10){
+for(let i=0;i<num;i++){
+setTimeout(createHeart,i*80);
 }
 }
 
+/* أول ضغطة للموبايل لو الصوت مقفول */
 document.addEventListener("click",()=>{
-if(audio.paused) audio.play().catch(()=>{});
+if(audio.paused){
+audio.play().catch(()=>{});
+}
 },{once:true});
 </script>
 

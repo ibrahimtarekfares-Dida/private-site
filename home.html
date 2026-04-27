@@ -31,11 +31,16 @@ align-items:center;
 padding:15px;
 overflow-x:hidden;
 color:#fff;
-transition:background 3s linear;
+transition:background 2s linear;
 position:relative;
 }
 
-/* خلفية */
+/* الوضع الليلي */
+body.night{
+background:linear-gradient(135deg,#1d1135,#3a1c71,#6a0572);
+}
+
+/* الخلفية */
 .bg-layer{
 position:fixed;
 inset:0;
@@ -44,16 +49,50 @@ z-index:0;
 overflow:hidden;
 }
 
+/* شاشة التحميل */
+#loadingScreen{
+position:fixed;
+inset:0;
+background:#ff5d8f;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:10000;
+font-size:22px;
+font-weight:700;
+gap:15px;
+}
+
+.loadbar{
+width:260px;
+height:18px;
+border-radius:20px;
+background:rgba(255,255,255,.2);
+overflow:hidden;
+}
+
+.loadfill{
+height:100%;
+width:0%;
+background:#fff;
+animation:loadit 2.8s forwards;
+}
+
+@keyframes loadit{
+from{width:0}
+to{width:100%}
+}
+
 /* شاشة البداية */
 #overlay{
 position:fixed;
 inset:0;
-background:#ff758c;
-display:flex;
+background:rgba(255,117,140,.95);
+display:none;
 justify-content:center;
 align-items:center;
 z-index:999;
-transition:.8s;
 padding:20px;
 }
 
@@ -68,12 +107,12 @@ cursor:pointer;
 background:#fff;
 color:#ff4b7d;
 box-shadow:0 10px 30px rgba(0,0,0,.15);
-animation:pulse 1.6s infinite;
+animation:pulse 1.4s infinite;
 }
 
 @keyframes pulse{
 0%{transform:scale(1)}
-50%{transform:scale(1.06)}
+50%{transform:scale(1.08)}
 100%{transform:scale(1)}
 }
 
@@ -108,7 +147,7 @@ margin-bottom:14px;
 .intro{
 text-align:center;
 line-height:1.9;
-font-size:clamp(16px,3.8vw,18px);
+font-size:18px;
 min-height:95px;
 margin-bottom:18px;
 }
@@ -121,16 +160,10 @@ text-align:center;
 margin-bottom:18px;
 }
 
-.counter-box span{
-display:block;
-margin-bottom:6px;
-font-size:16px;
-}
-
 #timer{
 direction:ltr;
 font-weight:700;
-font-size:clamp(16px,4vw,20px);
+font-size:20px;
 }
 
 .big-heart{
@@ -139,7 +172,6 @@ text-align:center;
 cursor:pointer;
 margin:10px 0 14px;
 transition:.3s;
-user-select:none;
 }
 
 .big-heart:hover{
@@ -153,52 +185,9 @@ background:rgba(255,255,255,.14);
 padding:12px;
 border-radius:14px;
 margin-bottom:16px;
-animation:fadeIn .5s;
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(10px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-/* timeline */
-.timeline{
-list-style:none;
-padding:0;
-margin:12px 0 18px;
-border-right:2px solid rgba(255,255,255,.45);
-}
-
-.timeline li{
-position:relative;
-padding-right:14px;
-margin-bottom:16px;
-line-height:1.7;
-font-size:15px;
-}
-
-.timeline li::before{
-content:"❤️";
-position:absolute;
-right:-12px;
-top:0;
-font-size:12px;
-}
-
-.date{
-display:inline-block;
-background:rgba(0,0,0,.12);
-padding:2px 8px;
-border-radius:8px;
-font-size:13px;
-font-weight:700;
-margin-bottom:4px;
-}
-
-.event{
-display:block;
-}
-
+/* أزرار */
 .buttons{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -233,36 +222,10 @@ text-align:center;
 line-height:1.7;
 }
 
-#loveMeterBox{
-display:none;
-margin-top:10px;
-}
-
-.meter{
-height:22px;
-background:rgba(255,255,255,.18);
-border-radius:30px;
-overflow:hidden;
-}
-
-.fill{
-height:100%;
-width:0%;
-background:#fff;
-transition:2.8s;
-}
-
-#loveText{
-text-align:center;
-margin-top:8px;
-font-weight:700;
-}
-
 .footer-note{
 margin-top:18px;
 text-align:center;
 font-style:italic;
-line-height:1.7;
 }
 
 .watermark{
@@ -273,7 +236,7 @@ opacity:.75;
 }
 
 /* popup */
-#popup{
+#popup,#welcomePopup{
 position:fixed;
 inset:0;
 display:none;
@@ -297,7 +260,7 @@ font-weight:700;
 line-height:1.7;
 }
 
-/* particles */
+/* عناصر طائرة */
 .float-item{
 position:fixed;
 pointer-events:none;
@@ -307,55 +270,52 @@ animation:rise linear forwards;
 
 @keyframes rise{
 0%{
-transform:translateY(0) scale(.8) rotate(0deg);
+transform:translateY(0) scale(.8);
 opacity:1;
 }
 100%{
-transform:translateY(-140vh) scale(1.5) rotate(360deg);
+transform:translateY(-130vh) scale(1.4) rotate(360deg);
 opacity:0;
 }
 }
 
-/* موبايل */
-@media (max-width:600px){
-
-.container{
-padding:18px;
-border-radius:22px;
+/* قلب مكان الضغط */
+.tap-heart{
+position:fixed;
+pointer-events:none;
+font-size:28px;
+animation:tapHeart .9s forwards;
+z-index:99999;
 }
 
-.timeline li{
-font-size:14px;
+@keyframes tapHeart{
+0%{transform:translate(-50%,-50%) scale(.5);opacity:1}
+100%{transform:translate(-50%,-120px) scale(1.6);opacity:0}
 }
 
-.buttons{
-grid-template-columns:1fr;
-}
-
-.popup-box{
-font-size:20px;
-}
-
-}
-
-/* لابتوب كبير */
-@media (min-width:900px){
-.container{
-max-width:580px;
-padding:28px;
-}
+@media(max-width:600px){
+.buttons{grid-template-columns:1fr;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-layer" id="bgLayer"></div>
+<div class="bg-layer"></div>
 
+<!-- شاشة التحميل -->
+<div id="loadingScreen">
+<div>جارٍ تحميل كمية الحب... ❤️</div>
+<div class="loadbar"><div class="loadfill"></div></div>
+<div id="loadPercent">0%</div>
+</div>
+
+<!-- شاشة البداية -->
 <div id="overlay">
 <button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
 </div>
 
+<!-- المحتوى -->
 <div class="container" id="mainContainer">
 
 <h1 id="mainTitle">لأجمل ديدا في الدنيا 🫶❤️</h1>
@@ -371,29 +331,12 @@ padding:28px;
 
 <div id="secretMsg">أنا هفضل أحبك طول العمر ❤️</div>
 
-<ul class="timeline">
-<li><span class="date">24/11/2024</span><span class="event">😍 اليوم اللي عيني شافت فيه أحلى صدفة</span></li>
-<li><span class="date">24/12/2024</span><span class="event">📩 أول رسالة قلبت حياتي كلها</span></li>
-<li><span class="date">26/12/2024</span><span class="event">🤣 أول هزار بينا وبداية الضحك</span></li>
-<li><span class="date">07/02/2026</span><span class="event">🏖️ رحلة اسكندرية.. من أجمل الذكريات</span></li>
-<li><span class="date">14/02/2026</span><span class="event">🤝 أول مقابلة مع بابا.. خطوة العمر</span></li>
-</ul>
-
 <div class="buttons">
-<button class="action" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
-<button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
 <button class="action" onclick="dailyMessage()">رسالة اليوم ❤️</button>
-<button class="action" onclick="changeNow()">لون جديد ✨</button>
+<button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
 </div>
 
 <div id="dailyMsgBox"></div>
-
-<div id="loveMeterBox">
-<div class="meter">
-<div class="fill" id="fillBar"></div>
-</div>
-<div id="loveText"></div>
-</div>
 
 <p class="footer-note" id="timeMsg"></p>
 
@@ -401,10 +344,18 @@ padding:28px;
 
 </div>
 
+<!-- مفاجأة -->
 <div id="popup" onclick="closeGift()">
 <div class="popup-box">
 أنا محظوظ إنك في حياتي ❤️<br>
 الجاي أجمل طول ما انتي معايا ✨
+</div>
+</div>
+
+<!-- ترحيب -->
+<div id="welcomePopup">
+<div class="popup-box">
+مرحبًا بأجمل ديدا في الدنيا ❤️
 </div>
 </div>
 
@@ -413,38 +364,47 @@ padding:28px;
 </audio>
 
 <script>
-/* عناصر */
 const overlay = document.getElementById("overlay");
+const loading = document.getElementById("loadingScreen");
+const percent = document.getElementById("loadPercent");
 const mainContainer = document.getElementById("mainContainer");
 const typedText = document.getElementById("typedText");
 const timer = document.getElementById("timer");
 const popup = document.getElementById("popup");
+const welcome = document.getElementById("welcomePopup");
 const audio = document.getElementById("myAudio");
 const timeMsg = document.getElementById("timeMsg");
 
 const startDate = new Date("2024-11-24T00:00:00");
 
-const introText =
-"من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني.. أنا بحبك أكتر بكتير مما تتخيلي ❤️";
+const introText="من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني.. أنا بحبك أكتر بكتير مما تتخيلي ❤️";
 
-const messages = [
+const messages=[
 "وجودك في حياتي نعمة كبيرة ❤️",
 "كل يوم معاكي بحبك أكتر 😍",
 "أجمل صدفة حصلتلي إني عرفتك 💖",
 "إنتي راحتي وسندي وكل دنيتي 🫶",
-"أنا فخور بيكي ❤️",
-"وجودك بيهون الدنيا ✨"
+"أنا فخور بيكي ❤️"
 ];
 
-/* بداية */
-function startEverything(){
-
-overlay.style.opacity="0";
-
+/* تحميل */
+let p=0;
+let loadInt=setInterval(()=>{
+p+=5;
+percent.innerText=p+"%";
+if(p>=100){
+clearInterval(loadInt);
 setTimeout(()=>{
+loading.style.display="none";
+overlay.style.display="flex";
+},400);
+}
+},130);
+
+/* تشغيل */
+function startEverything(){
 overlay.style.display="none";
 mainContainer.classList.add("show");
-},700);
 
 audio.volume=.35;
 audio.play().catch(()=>{});
@@ -452,142 +412,115 @@ audio.play().catch(()=>{});
 typeWriter();
 updateTimer();
 timeMessage();
+nightMode();
+birthdayCheck();
 
 setInterval(updateTimer,1000);
-setInterval(autoBg,5000);
-setInterval(createHeart,650);
-setInterval(createSpark,1200);
+setInterval(createSpark,700); /* نجوم أكثر */
+setInterval(createHeart,2200); /* قلوب أقل */
 }
 
 /* كتابة */
 function typeWriter(i=0){
-if(i < introText.length){
-typedText.innerHTML += introText.charAt(i);
-setTimeout(()=>typeWriter(i+1),38);
+if(i<introText.length){
+typedText.innerHTML+=introText.charAt(i);
+setTimeout(()=>typeWriter(i+1),35);
 }
 }
 
-/* عداد */
+/* العداد */
 function updateTimer(){
-const now = new Date();
-const diff = now - startDate;
-
-const d = Math.floor(diff / 86400000);
-const h = Math.floor(diff / 3600000) % 24;
-const m = Math.floor(diff / 60000) % 60;
-const s = Math.floor(diff / 1000) % 60;
-
-timer.innerText = `${d} يوم، ${h} ساعة، ${m} دقيقة، ${s} ثانية`;
+let now=new Date();
+let diff=now-startDate;
+let d=Math.floor(diff/86400000);
+let h=Math.floor(diff/3600000)%24;
+let m=Math.floor(diff/60000)%60;
+let s=Math.floor(diff/1000)%60;
+timer.innerText=`${d} يوم، ${h} ساعة، ${m} دقيقة، ${s} ثانية`;
 }
 
-/* رسالة حسب الوقت */
+/* رسالة الوقت */
 function timeMessage(){
-const h = new Date().getHours();
+let h=new Date().getHours();
+if(h<12) timeMsg.innerText="صباح الخير يا أجمل بداية ❤️";
+else if(h<18) timeMsg.innerText="نص اليوم عدى ولسه بحبك أكتر 😍";
+else timeMsg.innerText="تصبحي على حب أكتر من امبارح ❤️";
+}
 
-if(h >= 5 && h < 12){
-timeMsg.innerText = "صباح الخير يا أجمل بداية ❤️";
-}else if(h < 18){
-timeMsg.innerText = "نص اليوم عدى ولسه بحبك أكتر 😍";
-}else{
-timeMsg.innerText = "تصبحي على حب أكتر من امبارح ❤️";
+/* وضع ليلي */
+function nightMode(){
+let h=new Date().getHours();
+if(h>=0 && h<7){
+document.body.classList.add("night");
 }
 }
 
-/* تغيير لون */
-function autoBg(){
-const hue = Math.floor(Math.random()*360);
-document.body.style.background =
-`linear-gradient(135deg,hsl(${hue},80%,70%),hsl(${(hue+55)%360},80%,70%))`;
+/* عيد الميلاد */
+function birthdayCheck(){
+let now=new Date();
+if(now.getDate()==20 && now.getMonth()==5){
+document.getElementById("mainTitle").innerText="🎂 كل سنة وإنتي أجمل سنيني ❤️";
+}
 }
 
-function changeNow(){
-autoBg();
-}
-
-/* رسالة سرية */
-function showSecret(){
-document.getElementById("secretMsg").style.display="block";
-burst(14);
-}
-
-/* ميتر الحب */
-function showLoveMeter(){
-const box = document.getElementById("loveMeterBox");
-const fill = document.getElementById("fillBar");
-const txt = document.getElementById("loveText");
-
-box.style.display="block";
-fill.style.width="0%";
-txt.innerText="";
-
-setTimeout(()=>{
-fill.style.width="100%";
-},100);
-
-setTimeout(()=>{
-txt.innerText="1000000% 😍";
-},2800);
-}
-
-/* رسالة اليوم */
+/* رسالة يومية */
 function dailyMessage(){
-const box = document.getElementById("dailyMsgBox");
-const day = new Date().getDate();
-
+let box=document.getElementById("dailyMsgBox");
 box.style.display="block";
-box.innerText = messages[day % messages.length];
+box.innerText=messages[Math.floor(Math.random()*messages.length)];
 }
 
-/* popup */
-function openGift(){
-popup.style.display="flex";
-burst(20);
-}
+/* مفاجأة */
+function openGift(){ popup.style.display="flex"; }
+function closeGift(){ popup.style.display="none"; }
 
-function closeGift(){
-popup.style.display="none";
-}
+/* رسالة ترحيب أول دخول */
+setTimeout(()=>{
+welcome.style.display="flex";
+setTimeout(()=>welcome.style.display="none",2500);
+},3500);
 
-/* عناصر طائرة */
-function createHeart(){
-const item = document.createElement("div");
-item.className="float-item";
-item.innerHTML = ["❤️","💖","💕","💘"][Math.floor(Math.random()*4)];
-item.style.left = Math.random()*100 + "vw";
-item.style.bottom = "-20px";
-item.style.fontSize = (16 + Math.random()*20) + "px";
-item.style.animationDuration = (5 + Math.random()*4) + "s";
-
-document.body.appendChild(item);
-setTimeout(()=>item.remove(),9000);
-}
-
+/* نجوم */
 function createSpark(){
-const item = document.createElement("div");
+let item=document.createElement("div");
 item.className="float-item";
-item.innerHTML = ["✨","⭐","🌟"][Math.floor(Math.random()*3)];
-item.style.left = Math.random()*100 + "vw";
-item.style.bottom = "-20px";
-item.style.fontSize = (14 + Math.random()*12) + "px";
-item.style.animationDuration = (4 + Math.random()*3) + "s";
-
+item.innerHTML=["✨","⭐","🌟"][Math.floor(Math.random()*3)];
+item.style.left=Math.random()*100+"vw";
+item.style.bottom="-20px";
+item.style.fontSize=(12+Math.random()*14)+"px";
+item.style.animationDuration=(4+Math.random()*3)+"s";
 document.body.appendChild(item);
 setTimeout(()=>item.remove(),7000);
 }
 
-/* انفجار لطيف */
-function burst(num=10){
-for(let i=0;i<num;i++){
-setTimeout(createHeart,i*80);
-}
+/* قلوب */
+function createHeart(){
+let item=document.createElement("div");
+item.className="float-item";
+item.innerHTML=["❤️","💕","💖"][Math.floor(Math.random()*3)];
+item.style.left=Math.random()*100+"vw";
+item.style.bottom="-20px";
+item.style.fontSize=(16+Math.random()*18)+"px";
+item.style.animationDuration=(5+Math.random()*3)+"s";
+document.body.appendChild(item);
+setTimeout(()=>item.remove(),8000);
 }
 
-/* أول ضغطة للموبايل لو الصوت مقفول */
-document.addEventListener("click",()=>{
-if(audio.paused){
-audio.play().catch(()=>{});
+/* قلب مكان الضغط */
+document.addEventListener("click",function(e){
+let h=document.createElement("div");
+h.className="tap-heart";
+h.innerHTML="❤️";
+h.style.left=e.clientX+"px";
+h.style.top=e.clientY+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),900);
+});
+
+/* رسالة سرية */
+function showSecret(){
+document.getElementById("secretMsg").style.display="block";
 }
-},{once:true});
 </script>
 
 </body>

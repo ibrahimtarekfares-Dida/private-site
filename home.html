@@ -23,70 +23,77 @@ display:flex;
 justify-content:center;
 align-items:center;
 color:#fff;
-overflow-x:hidden;
-transition:3s;
-padding:20px;
-}
-
-/* شاشة التحميل */
-#loader{
-position:fixed;
-inset:0;
-background:#ff758c;
-z-index:999;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-font-size:22px;
-gap:15px;
-}
-
-.bar{
-width:260px;
-height:18px;
-border:2px solid #fff;
-border-radius:20px;
 overflow:hidden;
+transition:2s;
+padding:20px;
+position:relative;
 }
 
-.bar-fill{
-height:100%;
-width:0%;
-background:#fff;
-transition:3s linear;
+/* خلفية ليلية */
+body.night{
+background:linear-gradient(135deg,#0f1020,#1e2a5e,#3b2f72);
 }
 
-/* البداية */
-#overlay{
+/* نجوم وقلوب */
+.bg-item{
 position:fixed;
-inset:0;
-background:#ff758c;
-display:none;
-justify-content:center;
-align-items:center;
-z-index:500;
+pointer-events:none;
+z-index:0;
+animation:floatUp linear forwards;
+opacity:.8;
 }
 
-#overlay button{
-padding:16px 30px;
-font-size:22px;
-border:none;
-border-radius:50px;
-background:#fff;
-color:#ff758c;
+@keyframes floatUp{
+0%{transform:translateY(0) scale(.7);opacity:0}
+20%{opacity:1}
+100%{transform:translateY(-120vh) scale(1.4);opacity:0}
+}
+
+/* اسم ديدا */
+#didaGlow{
+position:fixed;
+top:8%;
+left:50%;
+transform:translateX(-50%);
+font-size:55px;
 font-weight:bold;
-cursor:pointer;
-animation:pulse 1.5s infinite;
-box-shadow:0 0 25px rgba(255,255,255,.4);
+opacity:.08;
+z-index:0;
+text-shadow:
+0 0 5px #fff,
+0 0 10px #ffb6d5,
+0 0 20px #ff5ca8;
+animation:glow 3s infinite alternate;
 }
 
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.08)}
-100%{transform:scale(1)}
+@keyframes glow{
+from{opacity:.05;transform:translateX(-50%) scale(1)}
+to{opacity:.13;transform:translateX(-50%) scale(1.04)}
 }
 
+/* popup ترحيب */
+#welcome{
+position:fixed;
+top:30px;
+left:50%;
+transform:translateX(-50%);
+background:#fff;
+color:#ff4b7d;
+padding:14px 22px;
+border-radius:30px;
+font-weight:bold;
+z-index:999;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+opacity:0;
+transition:1s;
+}
+
+#welcome.show{
+opacity:1;
+top:50px;
+}
+
+/* الصندوق */
 .container{
 background:rgba(255,255,255,.15);
 padding:35px 20px;
@@ -97,85 +104,20 @@ width:92%;
 text-align:center;
 border:1px solid rgba(255,255,255,.3);
 box-shadow:0 15px 35px rgba(0,0,0,.2);
-opacity:0;
-transform:translateY(20px);
-transition:1s;
 position:relative;
-}
-
-.container.show{
-opacity:1;
-transform:translateY(0);
+z-index:2;
 }
 
 h1{margin:0 0 15px;font-size:28px}
 
-.intro{line-height:1.8;font-size:17px;min-height:95px}
-
-.counter-box{
-background:rgba(255,255,255,.2);
-padding:15px;
-border-radius:20px;
-margin:20px 0;
-}
-
-#timer{
-margin-top:8px;
-direction:ltr;
-font-weight:bold;
+.intro{
+line-height:1.8;
 font-size:18px;
+min-height:70px;
 }
-
-.big-heart{
-font-size:42px;
-cursor:pointer;
-margin:10px 0;
-}
-
-#secretMsg{
-display:none;
-background:rgba(255,255,255,.18);
-padding:12px;
-border-radius:15px;
-margin-bottom:15px;
-}
-
-.timeline{
-list-style:none;
-padding:0;
-text-align:right;
-border-right:2px solid rgba(255,255,255,.5);
-margin:20px 0;
-}
-
-.timeline li{
-padding-right:15px;
-margin-bottom:18px;
-position:relative;
-}
-
-.timeline li::before{
-content:"❤️";
-position:absolute;
-right:-12px;
-top:0;
-font-size:12px;
-}
-
-.date{
-display:inline-block;
-padding:2px 8px;
-border-radius:6px;
-background:rgba(0,0,0,.12);
-font-size:14px;
-font-weight:bold;
-margin-bottom:5px;
-}
-
-.event{display:block;line-height:1.5}
 
 button.action{
-padding:12px 20px;
+padding:12px 18px;
 border:none;
 border-radius:30px;
 font-size:18px;
@@ -183,272 +125,141 @@ cursor:pointer;
 background:#fff;
 color:#ff4b7d;
 font-weight:bold;
-margin:8px 4px;
+margin:7px;
 }
 
-#loveMeterBox{display:none;margin-top:10px}
-
-.meter{
-height:20px;
-background:rgba(255,255,255,.2);
-border-radius:30px;
-overflow:hidden;
-}
-
-.fill{
-height:100%;
-width:0%;
-background:#fff;
-transition:3s;
-}
-
-.footer-note{margin-top:18px;font-style:italic}
-
-/* Popup */
-#popup{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.55);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:700;
-padding:20px;
-}
-
-.popup-box{
-background:#fff;
-color:#ff4b7d;
-padding:25px;
-border-radius:25px;
-max-width:320px;
-text-align:center;
-font-size:22px;
+#countLove{
+margin-top:10px;
 font-weight:bold;
-}
-
-/* قلوب */
-.heart{
-position:fixed;
-pointer-events:none;
-font-size:24px;
-animation:fly 2.5s linear forwards;
-z-index:50;
-}
-
-@keyframes fly{
-0%{transform:translate(0,0) scale(.7);opacity:1}
-100%{transform:translate(0,-130px) scale(1.6);opacity:0}
-}
-
-/* علامة مائية */
-.watermark{
-position:absolute;
-bottom:10px;
-left:12px;
-font-size:11px;
-opacity:.65;
-transform:rotate(-90deg);
-transform-origin:left bottom;
-white-space:nowrap;
+font-size:20px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- تحميل -->
-<div id="loader">
-<div>جارٍ تحميل كمية الحب... ❤️</div>
-<div class="bar"><div class="bar-fill" id="barFill"></div></div>
-<div id="percent">0%</div>
-</div>
+<div id="didaGlow">ديدا</div>
+<div id="welcome">مرحبًا بأجمل ديدا في الدنيا ❤️</div>
 
-<!-- البداية -->
-<div id="overlay">
-<button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
-</div>
+<div class="container">
 
-<!-- المحتوى -->
-<div class="container" id="mainContainer">
-
-<h1 id="mainTitle">لأجمل ديدا في الدنيا 🫶❤️</h1>
+<h1 id="mainTitle">لأجمل ديدا ❤️</h1>
 
 <p class="intro" id="typedText"></p>
 
-<div class="counter-box">
-<span>إحنا مع بعض بقالنا:</span>
-<div id="timer">تحميل...</div>
-</div>
+<button class="action" onclick="dailyMsg()">رسالة اليوم 💌</button>
 
-<div class="big-heart" onclick="showSecret()">❤️</div>
-<div id="secretMsg">أنا هفضل أحبك طول العمر ❤️</div>
-
-<ul class="timeline">
-<li><span class="date">24/11/2024</span><span class="event">😍اليوم اللي عيني شافت فيه أحلى صدفة (أول مرة شفتك)</span></li>
-<li><span class="date">24/12/2024</span><span class="event">📩أول "رسالة" قلبت حياتي كلها (بداية كلامنا)</span></li>
-<li><span class="date">26/12/2024</span><span class="event">🤣أول مرة قلتيلى "ما انا مش هخرج معاك فعلاً"😂</span></li>
-<li><span class="date">07/02/2026</span><span class="event">🏖️✨رحلة اسكندرية.. يومين من أجمل الذكريات اللي عشناها سوا❤️</span></li>
-<li><span class="date">14/02/2026</span><span class="event">🤝أول مقابلة مع بابا.. قراءة الفاتحة خطوة العمر🚶‍♂️🚶</span></li>
-</ul>
-
-<button class="action" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
-<button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
-
-<div id="loveMeterBox">
-<div class="meter"><div class="fill" id="fillBar"></div></div>
-<div id="loveText" style="margin-top:10px;font-weight:bold"></div>
-</div>
-
-<p class="footer-note" id="timeMsg"></p>
-
-<div class="watermark">صُنعت بكل الحب بواسطة قلبوا ❤️</div>
+<button class="action" onclick="loveCount()">❤️ بحبك كام مرة؟</button>
+<div id="countLove">0</div>
 
 </div>
-
-<!-- popup -->
-<div id="popup" onclick="closeGift()">
-<div class="popup-box">
-أنا محظوظ إنك في حياتي ❤️<br><br>
-الجاي أجمل طول ما انتي معايا ✨
-</div>
-</div>
-
-<!-- أصوات -->
-<audio id="myAudio" loop>
-<source src="kazdoura.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="clickSound">
-<source src="click.mp3" type="audio/mpeg">
-</audio>
 
 <script>
-const audio=document.getElementById("myAudio");
-const clickSound=document.getElementById("clickSound");
-const startDate=new Date("2024-11-24T00:00:00");
+const typedText=document.getElementById("typedText");
+const mainTitle=document.getElementById("mainTitle");
 
-/* تحميل */
-let p=0;
-const load=setInterval(()=>{
-p++;
-document.getElementById("percent").innerText=p+"%";
-document.getElementById("barFill").style.width=p+"%";
-if(p>=100){
-clearInterval(load);
+/* رسائل الدخول */
+const introMsgs=[
+"وجودك في حياتي نعمة كبيرة ❤️",
+"كل يوم معاكي بحبك أكتر 😍",
+"أجمل صدفة حصلتلي اني عرفتك 💖",
+"إنتي راحتي وسندي وكل دنيتي 🫶",
+"أنا فخور بيكي ❤️",
+"وجودك بيهون الدنيا 😍",
+"بحب تفاصيلك كلها 💖",
+"أنتي أحلى حاجة حصلتلي ✨"
+];
+
+/* رسالة اليوم */
+function dailyMsg(){
+const msg=introMsgs[Math.floor(Math.random()*introMsgs.length)];
+typedText.innerText=msg;
+}
+
+/* أول تحميل */
+window.onload=()=>{
+dailyMsg();
+showWelcome();
+nightMode();
+setInterval(createBackground,600);
+setInterval(randomHeartRain,7000);
+};
+
+/* popup */
+function showWelcome(){
+const box=document.getElementById("welcome");
+box.classList.add("show");
+
 setTimeout(()=>{
-document.getElementById("loader").style.display="none";
-document.getElementById("overlay").style.display="flex";
-},400);
-}
-},30);
-
-/* كتابة */
-const introText="من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني.. أنا بحبك أكتر بكتير مما تتخيلي ❤️";
-
-function typeWriter(text,i=0){
-if(i<text.length){
-typedText.innerHTML+=text.charAt(i);
-setTimeout(()=>typeWriter(text,i+1),40);
-}
+box.classList.remove("show");
+},2500);
 }
 
-/* بدء */
-function startEverything(){
-playClick();
-
-overlay.style.display="none";
-mainContainer.classList.add("show");
-
-audio.volume=.4;
-audio.play().catch(()=>{});
-
-typeWriter(introText);
-updateTimer();
-setInterval(updateTimer,1000);
-setInterval(changeBg,4000);
-
-timeMessage();
-}
-
-/* رسائل حسب الوقت */
-function timeMessage(){
+/* موود ليلي من 12 ل 7 */
+function nightMode(){
 const h=new Date().getHours();
-if(h>=5 && h<12){
-timeMsg.innerText="صباح الخير يا أجمل بداية ❤️";
-}else if(h>=12 && h<18){
-timeMsg.innerText="نص اليوم عدى ولسه بحبك أكتر 😍";
+
+if(h>=0 && h<7){
+document.body.classList.add("night");
+}
+}
+
+/* نجوم وقلوب بالخلفية */
+function createBackground(){
+
+const item=document.createElement("div");
+item.className="bg-item";
+
+const starChance=Math.random();
+
+if(starChance<0.75){
+item.innerHTML="✦";   // نجوم أكثر
+item.style.fontSize=(10+Math.random()*12)+"px";
 }else{
-timeMsg.innerText="تصبحي على حب أكتر من امبارح ❤️";
+item.innerHTML=["❤️","💕","💖"][Math.floor(Math.random()*3)];
+item.style.fontSize=(14+Math.random()*10)+"px";
+}
+
+item.style.left=Math.random()*100+"vw";
+item.style.bottom="-30px";
+item.style.animationDuration=(6+Math.random()*5)+"s";
+
+document.body.appendChild(item);
+
+setTimeout(()=>item.remove(),11000);
+}
+
+/* مطر قلوب ناعم أحيانًا */
+function randomHeartRain(){
+
+for(let i=0;i<8;i++){
+
+setTimeout(()=>{
+
+const h=document.createElement("div");
+h.className="bg-item";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.bottom="-20px";
+h.style.fontSize=(16+Math.random()*12)+"px";
+h.style.animationDuration=(5+Math.random()*3)+"s";
+
+document.body.appendChild(h);
+
+setTimeout(()=>h.remove(),9000);
+
+},i*250);
+
 }
 }
 
-/* عداد */
-function updateTimer(){
-const now=new Date();
-const diff=now-startDate;
+/* عداد الحب */
+let c=0;
 
-const d=Math.floor(diff/86400000);
-const h=Math.floor(diff/3600000)%24;
-const m=Math.floor(diff/60000)%60;
-const s=Math.floor(diff/1000)%60;
-
-timer.innerText=`${d} يوم، ${h} ساعة، ${m} دقيقة، ${s} ثانية`;
+function loveCount(){
+c++;
+document.getElementById("countLove").innerText=c+" مرة ولسه 😍";
 }
-
-/* خلفية */
-function changeBg(){
-const hue=Math.floor(Math.random()*360);
-document.body.style.background=
-`linear-gradient(135deg,hsl(${hue},80%,70%),hsl(${(hue+60)%360},80%,70%))`;
-}
-
-/* صوت ضغط */
-function playClick(){
-clickSound.currentTime=0;
-clickSound.play().catch(()=>{});
-}
-
-/* رسالة سرية */
-function showSecret(){
-playClick();
-secretMsg.style.display="block";
-}
-
-/* ميتر */
-function showLoveMeter(){
-playClick();
-loveMeterBox.style.display="block";
-fillBar.style.width="0%";
-
-setTimeout(()=>fillBar.style.width="100%",100);
-setTimeout(()=>loveText.innerText="1000000% 😍",3200);
-}
-
-/* مفاجأة */
-function openGift(){
-playClick();
-popup.style.display="flex";
-}
-
-function closeGift(){
-playClick();
-popup.style.display="none";
-}
-
-/* قلوب من مكان الضغط */
-document.addEventListener("click",function(e){
-
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML=["❤️","💖","💕","💘"][Math.floor(Math.random()*4)];
-heart.style.left=e.clientX+"px";
-heart.style.top=e.clientY+"px";
-
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),2500);
-
-});
 </script>
 
 </body>

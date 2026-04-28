@@ -40,6 +40,7 @@ body.night{
 background:linear-gradient(135deg,#101426,#24113d,#4c1d63);
 }
 
+/* طبقة الخلفية */
 .bg-layer{
 position:fixed;
 inset:0;
@@ -80,7 +81,9 @@ background:#fff;
 transition:width .12s linear;
 }
 
-#percent{font-size:20px}
+#percent{
+font-size:20px;
+}
 
 /* البداية */
 #overlay{
@@ -94,7 +97,6 @@ z-index:9999;
 padding:20px;
 }
 
-/* ===== زر 3D CINEMATIC (إضافة فقط) ===== */
 #overlay button{
 border:none;
 padding:16px 28px;
@@ -107,41 +109,6 @@ background:#fff;
 color:#ff4b7d;
 box-shadow:0 10px 30px rgba(0,0,0,.18);
 animation:pulse 1.4s infinite;
-
-transform: perspective(800px) rotateX(10deg);
-transform-style:preserve-3d;
-transition:.25s;
-}
-
-#overlay button:hover{
-transform: perspective(800px) rotateX(0deg) translateY(-3px) scale(1.03);
-}
-
-#overlay button:active{
-transform: perspective(800px) rotateX(-18deg) translateY(6px) scale(.98);
-}
-
-/* دخول سينمائي */
-.container.cinematic-enter{
-animation:cinematicIn 1.2s cubic-bezier(.16,1,.3,1) forwards;
-transform-origin:center;
-}
-
-@keyframes cinematicIn{
-0%{
-opacity:0;
-transform:translateY(80px) scale(.85) rotateX(55deg);
-filter:blur(8px);
-}
-60%{
-opacity:1;
-transform:translateY(-10px) scale(1.02) rotateX(-8deg);
-filter:blur(0);
-}
-100%{
-opacity:1;
-transform:translateY(0) scale(1) rotateX(0);
-}
 }
 
 @keyframes pulse{
@@ -167,9 +134,24 @@ transform:translateY(25px);
 transition:1s ease;
 }
 
-h1{text-align:center;font-size:clamp(25px,5vw,34px);margin-bottom:14px}
+.container.show{
+opacity:1;
+transform:translateY(0);
+}
 
-.intro{text-align:center;line-height:1.9;font-size:18px;min-height:95px;margin-bottom:18px}
+h1{
+text-align:center;
+font-size:clamp(25px,5vw,34px);
+margin-bottom:14px;
+}
+
+.intro{
+text-align:center;
+line-height:1.9;
+font-size:18px;
+min-height:95px;
+margin-bottom:18px;
+}
 
 .counter-box{
 background:rgba(255,255,255,.14);
@@ -179,14 +161,80 @@ text-align:center;
 margin-bottom:18px;
 }
 
-#timer{direction:ltr;font-size:20px;font-weight:700;margin-top:8px}
+#timer{
+direction:ltr;
+font-size:20px;
+font-weight:700;
+margin-top:8px;
+}
 
-.big-heart{font-size:48px;text-align:center;cursor:pointer;margin:10px 0 16px}
+.big-heart{
+font-size:48px;
+text-align:center;
+cursor:pointer;
+margin:10px 0 16px;
+transition:.3s;
+user-select:none;
+}
 
-#secretMsg{display:none;background:rgba(255,255,255,.14);padding:12px;border-radius:14px;text-align:center}
+.big-heart:hover{
+transform:scale(1.15);
+}
 
-.timeline{list-style:none;margin:12px 0 18px}
+#secretMsg{
+display:none;
+background:rgba(255,255,255,.14);
+padding:12px;
+border-radius:14px;
+text-align:center;
+margin-bottom:16px;
+animation:fade .5s;
+}
 
+@keyframes fade{
+from{opacity:0;transform:translateY(8px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* الخط الزمني */
+.timeline{
+list-style:none;
+padding:0;
+margin:12px 0 18px;
+border-right:2px solid rgba(255,255,255,.45);
+}
+
+.timeline li{
+position:relative;
+padding-right:15px;
+margin-bottom:16px;
+line-height:1.8;
+font-size:15px;
+}
+
+.timeline li::before{
+content:"❤️";
+position:absolute;
+right:-12px;
+top:0;
+font-size:12px;
+}
+
+.date{
+display:inline-block;
+background:rgba(0,0,0,.14);
+padding:3px 8px;
+border-radius:8px;
+font-size:13px;
+font-weight:700;
+margin-bottom:4px;
+}
+
+.event{
+display:block;
+}
+
+/* الأزرار */
 .buttons{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -198,41 +246,170 @@ button.action{
 border:none;
 padding:12px;
 border-radius:24px;
-font-family:'Tajawal';
+font-family:'Tajawal',sans-serif;
 font-size:16px;
 font-weight:700;
 cursor:pointer;
 background:#fff;
 color:#ff4b7d;
+transition:.2s;
 }
 
+button.action:hover{
+transform:translateY(-2px);
+}
+
+#dailyMsgBox,#loveMeterBox{
+display:none;
+background:rgba(255,255,255,.14);
+padding:12px;
+border-radius:14px;
+text-align:center;
+margin-bottom:14px;
+}
+
+.meter{
+height:22px;
+background:rgba(255,255,255,.18);
+border-radius:30px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.fill{
+height:100%;
+width:0%;
+background:#fff;
+transition:2.5s;
+}
+
+#loveText{
+margin-top:8px;
+font-weight:700;
+}
+
+.footer-note{
+text-align:center;
+margin-top:14px;
+line-height:1.8;
+font-style:italic;
+}
+
+.watermark{
+margin-top:18px;
+text-align:center;
+font-size:12px;
+opacity:.75;
+}
+
+/* popup */
+#popup,#welcomePopup{
+position:fixed;
+inset:0;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.55);
+z-index:99999;
+padding:20px;
+}
+
+.popup-box{
+background:#fff;
+color:#ff4b7d;
+padding:22px;
+border-radius:24px;
+max-width:340px;
+width:100%;
+text-align:center;
+font-size:22px;
+font-weight:700;
+line-height:1.8;
+}
+
+/* عناصر طائرة */
+.float-item{
+position:fixed;
+pointer-events:none;
+z-index:1;
+animation:rise linear forwards;
+}
+
+@keyframes rise{
+0%{
+transform:translateY(0) scale(.8);
+opacity:1;
+}
+100%{
+transform:translateY(-135vh) scale(1.4) rotate(360deg);
+opacity:0;
+}
+}
+
+/* قلب مكان الضغط */
+.tap-heart{
+position:fixed;
+pointer-events:none;
+font-size:28px;
+z-index:9999;
+animation:tapHeart .9s forwards;
+}
+
+@keyframes tapHeart{
+0%{
+transform:translate(-50%,-50%) scale(.4);
+opacity:1;
+}
+100%{
+transform:translate(-50%,-110px) scale(1.6);
+opacity:0;
+}
+}
+
+@media(max-width:600px){
+.buttons{
+grid-template-columns:1fr;
+}
+.container{
+padding:18px;
+border-radius:22px;
+}
+.timeline li{
+font-size:14px;
+}
+}
 </style>
 </head>
-
 <body>
 
+<div class="bg-layer"></div>
+
+<!-- تحميل -->
 <div id="loader">
 <div>جارٍ تحميل كمية الحب... ❤️</div>
 <div class="bar"><div class="fillbar" id="loaderBar"></div></div>
 <div id="percent">0%</div>
 </div>
 
+<!-- دخول -->
 <div id="overlay">
 <button onclick="startEverything()">إضغطي هنا يا ديدا ❤️</button>
 </div>
 
+<!-- الصفحة -->
 <div class="container" id="mainContainer">
 
-<h1>لأجمل ديدا في الدنيا 🫶❤️</h1>
+<h1 id="mainTitle">لأجمل ديدا في الدنيا 🫶❤️</h1>
 
 <p class="intro" id="typedText"></p>
 
 <div class="counter-box">
 <span>إحنا مع بعض بقالنا:</span>
-<div id="timer"></div>
+<div id="timer">تحميل...</div>
 </div>
 
 <div class="big-heart" onclick="showSecret()">❤️</div>
+
 <div id="secretMsg">أنا هفضل أحبك طول العمر ❤️</div>
 
 <ul class="timeline">
@@ -248,66 +425,275 @@ color:#ff4b7d;
 </ul>
 
 <div class="buttons">
-<button class="action" onclick="dailyMessage()">رسالة اليوم</button>
-<button class="action" onclick="openGift()">مفاجأة</button>
+<button class="action" onclick="showLoveMeter()">قد إيه بحبك؟ 😍</button>
+<button class="action" onclick="openGift()">افتحي المفاجأة 🎁</button>
+<button class="action" onclick="dailyMessage()">رسالة اليوم ❤️</button>
+<button class="action" onclick="changeNow()">لون جديد ✨</button>
 </div>
 
+<div id="dailyMsgBox"></div>
+
+<div id="loveMeterBox">
+<div class="meter">
+<div class="fill" id="fillBar"></div>
 </div>
+<div id="loveText"></div>
+</div>
+
+<p class="footer-note" id="timeMsg"></p>
+
+<div class="watermark">صُنعت بكل الحب بواسطة قلبوا ❤️</div>
+
+</div>
+
+<!-- popup -->
+<div id="popup" onclick="closeGift()">
+<div class="popup-box">
+أنا محظوظ إنك في حياتي ❤️<br>
+الجاي أجمل طول ما انتي معايا ✨
+</div>
+</div>
+
+<div id="welcomePopup">
+<div class="popup-box">
+مرحبًا بأجمل ديدا في الدنيا ❤️
+</div>
+</div>
+
+<audio id="myAudio" loop>
+<source src="kazdoura.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+const loader=document.getElementById("loader");
+const loaderBar=document.getElementById("loaderBar");
+const percent=document.getElementById("percent");
+
 const overlay=document.getElementById("overlay");
 const mainContainer=document.getElementById("mainContainer");
-const loader=document.getElementById("loader");
+const typedText=document.getElementById("typedText");
+const timer=document.getElementById("timer");
+const popup=document.getElementById("popup");
+const audio=document.getElementById("myAudio");
+const timeMsg=document.getElementById("timeMsg");
+const welcomePopup=document.getElementById("welcomePopup");
 
+const startDate=new Date("2024-11-24T00:00:00");
+
+const introText="من يوم ما دخلتي حياتي والدنيا بقت أهدى وأحلى وليها طعم تاني.. أنا بحبك أكتر بكتير مما تتخيلي ❤️";
+
+const messages=[
+"وجودك في حياتي نعمة كبيرة ❤️",
+"كل يوم معاكي بحبك أكتر 😍",
+"أجمل صدفة حصلتلي إني عرفتك 💖",
+"إنتي راحتي وسندي وكل دنيتي 🫶",
+"أنا فخور بيكي ❤️",
+"وجودك بيهون الدنيا ✨"
+];
+
+/* شاشة التحميل */
+let load=0;
+let loading=setInterval(()=>{
+load+=4;
+if(load>100) load=100;
+loaderBar.style.width=load+"%";
+percent.innerText=load+"%";
+
+if(load===100){
+clearInterval(loading);
+setTimeout(()=>{
+loader.style.display="none";
+overlay.style.display="flex";
+},400);
+}
+},100);
+
+/* بدء الصفحة */
 function startEverything(){
 
 overlay.style.opacity="0";
 
 setTimeout(()=>{
 overlay.style.display="none";
+mainContainer.classList.add("show");
+},500);
 
-/* 🎬 إضافة السينمائي فقط */
-mainContainer.classList.add("cinematic-enter");
+audio.volume=.35;
+audio.play().catch(()=>{});
 
-},400);
+typeWriter();
+updateTimer();
+timeMessage();
+nightMode();
+birthdayCheck();
 
-document.body.style.perspective="1000px";
+setInterval(updateTimer,1000);
+setInterval(autoBg,5000);
+
+/* نجوم أكثر من القلوب */
+setInterval(createSpark,700);
+setInterval(createHeart,2200);
+
+/* ترحيب أول دخول */
+setTimeout(()=>{
+welcomePopup.style.display="flex";
+setTimeout(()=>{
+welcomePopup.style.display="none";
+},2200);
+},500);
 }
 
-/* loader */
-let load=0;
-setInterval(()=>{
-load+=5;
-document.getElementById("loaderBar").style.width=load+"%";
-document.getElementById("percent").innerText=load+"%";
-
-if(load>=100){
-loader.style.display="none";
-overlay.style.display="flex";
+/* كتابة */
+function typeWriter(i=0){
+if(i<introText.length){
+typedText.innerHTML+=introText.charAt(i);
+setTimeout(()=>typeWriter(i+1),35);
 }
-},100);
-
-function showSecret(){
-document.getElementById("secretMsg").style.display="block";
 }
 
-function dailyMessage(){
-alert("بحبك ❤️");
-}
-
-function openGift(){
-alert("🎁");
-}
-
-/* عداد بسيط */
-const startDate=new Date();
-setInterval(()=>{
+/* عداد */
+function updateTimer(){
 const now=new Date();
 const diff=now-startDate;
-document.getElementById("timer").innerText=
-Math.floor(diff/1000)+" ثانية";
-},1000);
 
+const d=Math.floor(diff/86400000);
+const h=Math.floor(diff/3600000)%24;
+const m=Math.floor(diff/60000)%60;
+const s=Math.floor(diff/1000)%60;
+
+timer.innerText=`${d} يوم، ${h} ساعة، ${m} دقيقة، ${s} ثانية`;
+}
+
+/* رسالة الوقت */
+function timeMessage(){
+const h=new Date().getHours();
+
+if(h>=5 && h<12){
+timeMsg.innerText="صباح الخير يا أجمل بداية ❤️";
+}else if(h<18){
+timeMsg.innerText="نص اليوم عدى ولسه بحبك أكتر 😍";
+}else{
+timeMsg.innerText="تصبحي على حب أكتر من امبارح ❤️";
+}
+}
+
+/* وضع ليلي */
+function nightMode(){
+const h=new Date().getHours();
+if(h>=0 && h<7){
+document.body.classList.add("night");
+}
+}
+
+/* عيد الميلاد */
+function birthdayCheck(){
+const now=new Date();
+if(now.getDate()===20 && now.getMonth()===5){
+document.getElementById("mainTitle").innerText="🎂 كل سنة وإنتي أجمل سنيني ❤️";
+}
+}
+
+/* تغيير ألوان */
+function autoBg(){
+if(document.body.classList.contains("night")) return;
+
+const hue=Math.floor(Math.random()*360);
+document.body.style.background=
+`linear-gradient(135deg,hsl(${hue},82%,68%),hsl(${(hue+55)%360},82%,70%))`;
+}
+
+function changeNow(){
+autoBg();
+}
+
+/* رسالة سرية */
+function showSecret(){
+document.getElementById("secretMsg").style.display="block";
+burst(14);
+}
+
+/* ميتر الحب */
+function showLoveMeter(){
+const box=document.getElementById("loveMeterBox");
+const fill=document.getElementById("fillBar");
+const txt=document.getElementById("loveText");
+
+box.style.display="block";
+fill.style.width="0%";
+txt.innerText="";
+
+setTimeout(()=>fill.style.width="100%",100);
+setTimeout(()=>txt.innerText="1000000% 😍",2600);
+}
+
+/* رسالة اليوم */
+function dailyMessage(){
+const box=document.getElementById("dailyMsgBox");
+box.style.display="block";
+box.innerText=messages[Math.floor(Math.random()*messages.length)];
+}
+
+/* popup */
+function openGift(){
+popup.style.display="flex";
+burst(18);
+}
+
+function closeGift(){
+popup.style.display="none";
+}
+
+/* قلوب بالخلفية */
+function createHeart(){
+const item=document.createElement("div");
+item.className="float-item";
+item.innerHTML=["❤️","💕","💖","💘"][Math.floor(Math.random()*4)];
+item.style.left=Math.random()*100+"vw";
+item.style.bottom="-20px";
+item.style.fontSize=(16+Math.random()*18)+"px";
+item.style.animationDuration=(5+Math.random()*4)+"s";
+document.body.appendChild(item);
+setTimeout(()=>item.remove(),9000);
+}
+
+/* نجوم أكثر */
+function createSpark(){
+const item=document.createElement("div");
+item.className="float-item";
+item.innerHTML=["✨","⭐","🌟","✦"][Math.floor(Math.random()*4)];
+item.style.left=Math.random()*100+"vw";
+item.style.bottom="-20px";
+item.style.fontSize=(12+Math.random()*12)+"px";
+item.style.animationDuration=(4+Math.random()*3)+"s";
+document.body.appendChild(item);
+setTimeout(()=>item.remove(),7000);
+}
+
+/* انفجار */
+function burst(num=10){
+for(let i=0;i<num;i++){
+setTimeout(createHeart,i*70);
+}
+}
+
+/* قلب مكان الضغط */
+document.addEventListener("click",function(e){
+
+const h=document.createElement("div");
+h.className="tap-heart";
+h.innerHTML="❤️";
+h.style.left=e.clientX+"px";
+h.style.top=e.clientY+"px";
+
+document.body.appendChild(h);
+
+setTimeout(()=>h.remove(),900);
+
+if(audio.paused){
+audio.play().catch(()=>{});
+}
+
+},{passive:true});
 </script>
 
 </body>

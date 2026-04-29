@@ -7,7 +7,12 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
-<style>
+<style>#sky{
+position:fixed;
+inset:0;
+z-index:0;
+pointer-events:none;
+}
 :root{
 --pink1:#ff758c;
 --pink2:#ff7eb3;
@@ -409,8 +414,7 @@ grid-template-columns:repeat(2,1fr);
 </head>
 <body>
 
-<div class="bg-layer"></div>
-
+<canvas id="sky"></canvas>
 <div id="loader">
 <div>جارٍ تحميل كمية الحب... ❤️</div>
 <div class="bar"><div class="fillbar" id="loaderBar"></div></div>
@@ -505,7 +509,41 @@ grid-template-columns:repeat(2,1fr);
 <source src="kazdoura.mp3" type="audio/mpeg">
 </audio>
 
-<script>
+<script>function startSky(){
+const canvas=document.getElementById("sky");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<120;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+for(let s of stars){
+ctx.fillStyle="white";
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+
+s.y+=0.3;
+if(s.y>canvas.height)s.y=0;
+}
+
+requestAnimationFrame(draw);
+}
+
+draw();
+}
 const loader=document.getElementById("loader");
 const loaderBar=document.getElementById("loaderBar");
 const percent=document.getElementById("percent");
@@ -548,6 +586,8 @@ overlay.style.display="flex";
 
 function startEverything(){
 
+startSky();
+
 overlay.style.opacity="0";
 
 setTimeout(()=>{
@@ -564,8 +604,12 @@ timeMessage();
 nightMode();
 
 setInterval(updateTimer,1000);
-setInterval(autoBg,5000);
-setInterval(createSpark,700);
+setInterval(()=>{
+if(!document.body.classList.contains("night")){
+autoBg();
+}
+},5000);
+  setInterval(createSpark,700);
 setInterval(createHeart,2200);
 
 setTimeout(()=>{
@@ -575,7 +619,6 @@ welcomePopup.style.display="none";
 },2200);
 },500);
 }
-
 function typeWriter(i=0){
 if(i<introText.length){
 typedText.innerHTML+=introText.charAt(i);
@@ -624,8 +667,8 @@ const hue = Math.floor(Math.random() * 360);
 
 document.body.style.background =
 `linear-gradient(135deg,
-hsl(${hue},82%,68%),
-hsl(${(hue + 55) % 360},82%,70%))`;
+hsl(${hue}, 85%, 65%),
+hsl(${(hue + 50) % 360}, 85%, 70%))`;
 }
 
 function changeNow(){
